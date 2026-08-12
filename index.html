@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="zh-Hant" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<title>Agent Usage Widget</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A macOS desktop widget showing how much Claude and Codex quota you have left, and when each window resets.">
+<meta property="og:title" content="Agent Usage Widget">
+<meta property="og:description" content="Remaining Claude and Codex quota on your macOS desktop, read from the same endpoints their own apps use.">
+<meta name="color-scheme" content="dark light">
+
+<style>
+  /* ── Tokens ────────────────────────────────────────────────────────────────
+     Dark-first, because the product itself is a translucent dark HUD sitting on
+     a desktop. Light is a full second design, not an inversion: the same amber
+     instrument accent, re-mixed to hold contrast on paper. Every colour is
+     defined here on bare :root so the un-stamped (system) state resolves. */
+  :root {
+    color-scheme: dark light;
+
+    --ground:      #100F12;
+    --ground-deep: #0A090C;
+    --surface:     #191821;
+    --surface-2:   #201F29;
+    --line:        #2B2A36;
+    --line-strong: #3D3B4B;
+    --ink:         #ECEAF2;
+    --ink-mid:     #A9A5B8;
+    --ink-dim:     #736F82;
+    --accent:      #D98C4A;
+    --accent-soft: #4A3524;
+    --accent-ink:  #17140F;
+    --good:        #7FA88A;
+
+    --panel-w: 340px;
+
+    --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.83rem);
+    --step-0:  clamp(0.95rem, 0.92rem + 0.15vw, 1.02rem);
+    --step-1:  clamp(1.12rem, 1.05rem + 0.35vw, 1.3rem);
+    --step-2:  clamp(1.4rem,  1.25rem + 0.7vw,  1.8rem);
+    --step-3:  clamp(1.9rem,  1.55rem + 1.6vw,  3rem);
+
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Helvetica Neue",
+            "PingFang TC", "Noto Sans TC", sans-serif;
+    /* The product is an AppKit utility for developers; mono is its native register,
+       and it carries every number, label and path on this page. */
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, "JetBrains Mono", monospace;
+  }
+
+  /* Written flat rather than nested, so browsers without CSS nesting still resolve it.
+     The guard lets an explicit dark choice beat a light OS setting. */
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --ground:      #F2F1F0;
+      --ground-deep: #E7E5E4;
+      --surface:     #FFFFFF;
+      --surface-2:   #F7F6F5;
+      --line:        #DEDCDA;
+      --line-strong: #C6C3C0;
+      --ink:         #16151A;
+      --ink-mid:     #4E4B57;
+      --ink-dim:     #7C7889;
+      --accent:      #A9601F;
+      --accent-soft: #F1E3D5;
+      --accent-ink:  #FFFFFF;
+      --good:        #3F6B4E;
+    }
+  }
+
+  :root[data-theme="light"] {
+    --ground:      #F2F1F0;
+    --ground-deep: #E7E5E4;
+    --surface:     #FFFFFF;
+    --surface-2:   #F7F6F5;
+    --line:        #DEDCDA;
+    --line-strong: #C6C3C0;
+    --ink:         #16151A;
+    --ink-mid:     #4E4B57;
+    --ink-dim:     #7C7889;
+    --accent:      #A9601F;
+    --accent-soft: #F1E3D5;
+    --accent-ink:  #FFFFFF;
+    --good:        #3F6B4E;
+  }
+
+  /* ── Language switching ────────────────────────────────────────────────────
+     The no-attribute case is covered too: without it, both languages would be
+     visible for the moment before the script runs. */
+  [data-lang="zh"] [lang="en"],
+  html:not([data-lang]) [lang="en"] { display: none; }
+  [data-lang="en"] [lang="zh-Hant"] { display: none; }
+
+  /* ── Base ────────────────────────────────────────────────────────────────── */
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: var(--step-0);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 0 clamp(1.15rem, 4vw, 2.5rem);
+  }
+
+  h1, h2, h3 { text-wrap: balance; margin: 0; line-height: 1.2; font-weight: 620; }
+  p { margin: 0; max-width: 62ch; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  code, .mono { font-family: var(--mono); font-size: 0.9em; }
+  code {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 0.1em 0.35em;
+    /* Full app paths are single unbreakable tokens and pushed the page sideways on a phone. */
+    overflow-wrap: anywhere;
+  }
+
+  /* Eyebrow labels double as the section index: each one names the question the
+     section answers, so they carry content rather than decoration. */
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 0;
+  }
+
+  section { border-top: 1px solid var(--line); }
+  section > .wrap { padding-block: clamp(2.75rem, 6vw, 4.5rem); }
+  /* Children stretch so cards, tables and step lists fill the column; running text is
+     held to a readable measure by its own max-width instead. */
+  .stack { display: flex; flex-direction: column; gap: 1.15rem; align-items: stretch; }
+  .stack--tight { gap: 0.6rem; }
+
+  /* ── Top bar ─────────────────────────────────────────────────────────────── */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--ground);
+    background: color-mix(in oklab, var(--ground) 88%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar > .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.7rem;
+  }
+  .wordmark {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.04em;
+    color: var(--ink-mid);
+  }
+
+  .toggle {
+    display: flex;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .toggle button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--ink-mid);
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    padding: 0.3rem 0.75rem;
+    cursor: pointer;
+  }
+  .toggle button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+
+  /* ── Hero ────────────────────────────────────────────────────────────────── */
+  .hero > .wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    padding-block: clamp(3rem, 8vw, 5.5rem);
+  }
+  @media (max-width: 860px) {
+    .hero > .wrap { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .hero h1 {
+    font-size: var(--step-3);
+    letter-spacing: -0.02em;
+    font-weight: 660;
+  }
+  .lede { font-size: var(--step-1); color: var(--ink-mid); }
+
+  /* ── Widget replica ──────────────────────────────────────────────────────────
+     The most characteristic thing about this product is what it looks like on a
+     desktop, so the hero shows the real thing rather than describing it. Same
+     340pt grid, same right-aligned mono columns as the AppKit panel. */
+  /* Deliberately theme-independent: this is a picture of the product on a desktop, and the
+     widget is a translucent dark HUD in both themes. Re-mixing it for light mode would show
+     something the user will never actually see. Hence literal colours, not tokens. */
+  .desk {
+    background: linear-gradient(160deg, #26232E, #0A090C);
+    background:
+      radial-gradient(120% 90% at 15% 0%, rgba(217, 140, 74, 0.22), transparent 60%),
+      linear-gradient(160deg, #26232E, #0A090C);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+  }
+
+  .panel {
+    width: var(--panel-w);
+    max-width: 100%;
+    background: rgba(12, 11, 15, 0.66);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 10px;
+    padding: 14px 18px 16px;
+    color: #fff;
+    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.8);
+    font-family: var(--sans);
+  }
+  .panel__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .panel__title { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.7); }
+  .panel__stamp {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.44);
+    white-space: nowrap;
+  }
+  .panel__cols {
+    display: grid;
+    grid-template-columns: 96px 68px 1fr;
+    gap: 0 10px;
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 5px;
+  }
+  .panel__cols span:not(:first-child) { text-align: right; }
+
+  .panel__row {
+    display: grid;
+    grid-template-columns: 96px 68px 1fr;
+    gap: 0 10px;
+    align-items: baseline;
+    padding-top: 6px;
+  }
+  .panel__row b { font-size: 19px; font-weight: 700; }
+  .panel__row span {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 19px;
+    font-weight: 600;
+    text-align: right;
+  }
+  .panel__row .pct { color: rgba(255,255,255,0.74); }
+  .panel__row .rst { color: rgba(255,255,255,0.52); }
+  .panel__rule { height: 1px; background: rgba(255,255,255,0.07); margin: 12px 0 10px; }
+  .panel__title--claude { display: block; margin-bottom: 2px; }
+
+  .desk__caption {
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0.9rem 0 0;
+    max-width: var(--panel-w);
+  }
+
+  /* ── Downloads ───────────────────────────────────────────────────────────── */
+  .downloads { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  .dl {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.7rem 1.1rem;
+    border-radius: 9px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--ink);
+    text-decoration: none;
+    flex: 1 1 12rem;
+  }
+  .dl:hover { border-color: var(--accent); }
+  .dl--primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .dl--primary:hover { border-color: var(--accent); filter: brightness(1.07); }
+  .dl b { font-size: var(--step-0); font-weight: 620; }
+  .dl small { font-family: var(--mono); font-size: var(--step--1); opacity: 0.75; }
+
+  .meta {
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    color: var(--ink-dim);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    margin: 0;
+    list-style: none;
+    padding: 0;
+  }
+
+  /* ── Steps: a real ordered sequence, so it is numbered ───────────────────── */
+  .steps { counter-reset: step; display: grid; gap: 1.4rem; margin: 0; padding: 0; list-style: none; }
+  .steps > li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 2.1rem minmax(0, 1fr);
+    gap: 0 1rem;
+    align-items: start;
+  }
+  .steps > li::before {
+    content: counter(step);
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    color: var(--accent);
+    border: 1px solid var(--accent-soft);
+    background: var(--accent-soft);
+    border-radius: 6px;
+    width: 2.1rem;
+    height: 2.1rem;
+    display: grid;
+    place-items: center;
+  }
+  .steps h3 { font-size: var(--step-0); }
+  .steps p { color: var(--ink-mid); }
+
+  .note {
+    border-left: 2px solid var(--accent);
+    padding: 0.15rem 0 0.15rem 1rem;
+    color: var(--ink-mid);
+    font-size: var(--step--1);
+    max-width: 62ch;
+  }
+
+  /* ── Grids and tables ────────────────────────────────────────────────────── */
+  .cards { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+  .cards > div { background: var(--surface); padding: 1.15rem 1.25rem; display: flex; flex-direction: column; gap: 0.35rem; }
+  .cards h3 { font-size: var(--step-0); }
+  .cards p { color: var(--ink-mid); font-size: var(--step--1); }
+
+  .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+  table { border-collapse: collapse; width: 100%; font-size: var(--step--1); }
+  th, td { text-align: left; padding: 0.7rem 0.95rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-family: var(--mono); font-weight: 500; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.08em; background: var(--surface-2); }
+  tr:last-child td { border-bottom: 0; }
+  td code { white-space: nowrap; }
+
+  .faq { max-width: 48rem; }
+  details { border-bottom: 1px solid var(--line); }
+  details p { padding-bottom: 0.9rem; color: var(--ink-mid); }
+  summary { cursor: pointer; padding: 0.85rem 0; font-weight: 560; }
+  summary::marker { color: var(--accent); }
+
+  footer { border-top: 1px solid var(--line); background: var(--ground-deep); }
+  footer > .wrap { padding-block: 2.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  footer p { color: var(--ink-dim); font-size: var(--step--1); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="wordmark">
+      <svg width="18" height="18" viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="1" y="1" width="30" height="30" rx="7" fill="#191821"/>
+        <circle cx="16" cy="16" r="9" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="3.6"/>
+        <path d="M16 7a9 9 0 1 0 -6.4 15.3" fill="none" stroke="#D98C4A" stroke-width="3.6" stroke-linecap="round"/>
+        <circle cx="16" cy="16" r="2.6" fill="#ECEAF2"/>
+      </svg>
+      Agent Usage Widget
+    </div>
+    <div class="toggle" role="group" aria-label="Language / 語言">
+      <button type="button" data-set-lang="zh" aria-pressed="true">中文</button>
+      <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="stack">
+      <p class="eyebrow">macOS · Apple Silicon</p>
+      <h1>
+        <span lang="zh-Hant">還剩多少額度，桌面上就看得到</span>
+        <span lang="en">See what quota you have left, without asking</span>
+      </h1>
+      <p class="lede">
+        <span lang="zh-Hant">Claude 與 Codex 各額度視窗的<strong>剩餘</strong>百分比與回復 100% 的時間，
+          固定在桌面左上角，每分鐘自動更新。數字直接讀官方端點，不是估算。</span>
+        <span lang="en">The <strong>remaining</strong> percentage of every Claude and Codex quota window,
+          plus when each one resets, pinned to the top-left of your desktop and refreshed every
+          minute. The numbers come from the same endpoints the official apps use — nothing is estimated.</span>
+      </p>
+
+      <div class="downloads">
+        <a class="dl dl--primary" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.1.0-arm64.dmg">
+          <b><span lang="zh-Hant">下載 .dmg</span><span lang="en">Download .dmg</span></b>
+          <small>0.1.0 · 35 MB · arm64</small>
+        </a>
+        <a class="dl" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.1.0-arm64.pkg">
+          <b><span lang="zh-Hant">下載 .pkg</span><span lang="en">Download .pkg</span></b>
+          <small lang="zh-Hant">0.1.0 · 31 MB · 一併設定好</small>
+          <small lang="en">0.1.0 · 31 MB · full setup</small>
+        </a>
+      </div>
+      <ul class="meta">
+        <li lang="zh-Hant">.dmg 拖曳安裝 · .pkg 會一併設定開機啟動與 skill</li>
+        <li lang="en">.dmg installs by dragging · .pkg also sets up login item and skill</li>
+      </ul>
+    </div>
+
+    <div class="desk">
+      <div class="panel">
+        <div class="panel__head">
+          <span class="panel__title">
+            <span lang="zh-Hant">Codex 可用額度</span><span lang="en">Codex quota left</span>
+          </span>
+          <span class="panel__stamp">⟳ <span lang="zh-Hant">上次 23:54</span><span lang="en">Last 23:54</span></span>
+        </div>
+        <div class="panel__cols">
+          <span></span>
+          <span lang="zh-Hant">剩餘</span><span lang="en">Remaining</span>
+          <span lang="zh-Hant">重置時間</span><span lang="en">Resets</span>
+        </div>
+        <div class="panel__row">
+          <b lang="zh-Hant">5 小時</b><b lang="en">5 hours</b>
+          <span class="pct" lang="zh-Hant">無</span><span class="pct" lang="en">None</span>
+          <span class="rst">—</span>
+        </div>
+        <div class="panel__row">
+          <b lang="zh-Hant">1 週</b><b lang="en">1 week</b>
+          <span class="pct">82%</span>
+          <span class="rst">08/18</span>
+        </div>
+        <div class="panel__rule"></div>
+        <span class="panel__title panel__title--claude">
+          <span lang="zh-Hant">Claude 可用額度</span><span lang="en">Claude quota left</span>
+        </span>
+        <div class="panel__row">
+          <b lang="zh-Hant">5 小時</b><b lang="en">5 hours</b>
+          <span class="pct">36%</span>
+          <span class="rst">23:59</span>
+        </div>
+        <div class="panel__row">
+          <b lang="zh-Hant">1 週</b><b lang="en">1 week</b>
+          <span class="pct">80%</span>
+          <span class="rst">08/17</span>
+        </div>
+        <div class="panel__row">
+          <b>Fable</b>
+          <span class="pct">90%</span>
+          <span class="rst">08/17</span>
+        </div>
+      </div>
+      <p class="desk__caption">
+        <span lang="zh-Hant">「無」代表這個方案沒有 5 小時限制，不是讀取失敗。
+          最後一列的名稱由 API 決定，會是 Fable、Sonnet 等。</span>
+        <span lang="en">"None" means the plan has no 5-hour window at all — not that the read failed.
+          The last row is named by the API: Fable, Sonnet, and so on.</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap stack">
+    <p class="eyebrow"><span lang="zh-Hant">它做什麼</span><span lang="en">What it does</span></p>
+    <div class="cards">
+      <div>
+        <h3><span lang="zh-Hant">兩邊都是即時官方數字</span><span lang="en">Live official numbers</span></h3>
+        <p><span lang="zh-Hant">Codex 讀 <code>codex/usage</code>，Claude 讀 <code>organizations/…/usage</code>，
+          與各自 App 顯示的同源，所以不會對不上。</span>
+          <span lang="en">Codex from <code>codex/usage</code>, Claude from <code>organizations/…/usage</code> —
+          the same sources their own apps read, so the numbers agree.</span></p>
+      </div>
+      <div>
+        <h3><span lang="zh-Hant">不擋你的視窗</span><span lang="en">Never in the way</span></h3>
+        <p><span lang="zh-Hant">停在桌面層，一般應用程式視窗一律蓋在它上面；不出現在 Dock、
+          選單列或「應用程式」切換器。</span>
+          <span lang="en">It sits at desktop level, so real windows always cover it. No Dock icon,
+          no menu bar item, no app switcher entry.</span></p>
+      </div>
+      <div>
+        <h3><span lang="zh-Hant">繁體中文 / English</span><span lang="en">Chinese / English</span></h3>
+        <p><span lang="zh-Hant">在小工具上按右鍵即可切換，預設跟隨系統語言。</span>
+          <span lang="en">Right-click the widget to switch. It follows your system language by default.</span></p>
+      </div>
+      <div>
+        <h3><span lang="zh-Hant">也是一個 skill</span><span lang="en">Also a skill</span></h3>
+        <p><span lang="zh-Hant">右鍵選單可把 skill 裝進 Claude Code 或 Codex，之後在對話中輸入
+          <code>/agent-usage-widget</code> 就能問剩多少。</span>
+          <span lang="en">The right-click menu installs a skill into Claude Code or Codex, so
+          <code>/agent-usage-widget</code> reports the same numbers in chat.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap stack">
+    <p class="eyebrow"><span lang="zh-Hant">第一次開啟</span><span lang="en">Opening it the first time</span></p>
+    <h2><span lang="zh-Hant">macOS 會先擋一次，這是預期的</span><span lang="en">macOS blocks it once, and that is expected</span></h2>
+    <p>
+      <span lang="zh-Hant">這個 app 沒有付費的 Apple 開發者公證，所以第一次開啟會被 Gatekeeper 攔下。
+        以下三步只需做一次。</span>
+      <span lang="en">This app has no paid Apple Developer notarization, so Gatekeeper stops the first
+        launch. These three steps are needed once.</span>
+    </p>
+
+    <ol class="steps">
+      <li>
+        <div class="stack stack--tight">
+          <h3><span lang="zh-Hant">安裝</span><span lang="en">Install</span></h3>
+          <p><span lang="zh-Hant">開啟下載的 .dmg，把 AgentUsageWidget 拖到 Applications。
+            用 .pkg 的話雙擊照指示走完即可。</span>
+            <span lang="en">Open the .dmg and drag AgentUsageWidget into Applications. With the .pkg,
+            double-click and follow the installer.</span></p>
+        </div>
+      </li>
+      <li>
+        <div class="stack stack--tight">
+          <h3><span lang="zh-Hant">雙擊，然後被擋下</span><span lang="en">Double-click, and get blocked</span></h3>
+          <p><span lang="zh-Hant">會看到「Apple 無法驗證此 App 是否含有惡意軟體」。關掉對話框就好。</span>
+            <span lang="en">You will see "Apple could not verify … is free of malware". Dismiss it.</span></p>
+        </div>
+      </li>
+      <li>
+        <div class="stack stack--tight">
+          <h3><span lang="zh-Hant">系統設定 → 隱私權與安全性 → 仍要打開</span>
+            <span lang="en">System Settings → Privacy &amp; Security → Open Anyway</span></h3>
+          <p><span lang="zh-Hant">往下捲到剛才被阻擋的訊息，按「仍要打開」並確認。之後就能正常雙擊啟動。</span>
+            <span lang="en">Scroll to the message about the blocked app, click Open Anyway and confirm.
+            Double-clicking works from then on.</span></p>
+        </div>
+      </li>
+    </ol>
+
+    <p class="note">
+      <span lang="zh-Hant">macOS 15 之後，Apple 已移除「右鍵 → 打開」這條捷徑，未公證的 app 只能走系統設定。
+        習慣終端機的話，<code>xattr -dr com.apple.quarantine /Applications/AgentUsageWidget.app</code>
+        可以取代第 2–3 步。</span>
+      <span lang="en">macOS 15 removed the old right-click → Open shortcut for unnotarized apps; System
+        Settings is now the only route. If you prefer a terminal,
+        <code>xattr -dr com.apple.quarantine /Applications/AgentUsageWidget.app</code> replaces steps 2–3.</span>
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap stack">
+    <p class="eyebrow"><span lang="zh-Hant">數字從哪來</span><span lang="en">Where the numbers come from</span></p>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th><span lang="zh-Hant">服務</span><span lang="en">Service</span></th>
+            <th><span lang="zh-Hant">來源</span><span lang="en">Source</span></th>
+            <th><span lang="zh-Hant">認證</span><span lang="en">Credential</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Codex</td>
+            <td><code>chatgpt.com/backend-api/codex/usage</code></td>
+            <td><code>~/.codex/auth.json</code> <span lang="zh-Hant">的 OAuth token</span><span lang="en">OAuth token</span></td>
+          </tr>
+          <tr>
+            <td>Claude</td>
+            <td><code>claude.ai/api/organizations/…/usage</code></td>
+            <td><span lang="zh-Hant">Claude Desktop cookie + Keychain</span><span lang="en">Claude Desktop cookie + Keychain</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <span lang="zh-Hant">登入材料只在記憶體中用來呼叫該服務自己的官方端點，不寫入磁碟、不輸出、不傳給任何第三方。
+        本機快取只存百分比與時間戳。沒有遙測、沒有分析、沒有遠端後台。</span>
+      <span lang="en">Login material is used in memory only, to call each service's own endpoint. It is never
+        written to disk, printed, or sent anywhere else. The local cache holds nothing but percentages and
+        timestamps. No telemetry, no analytics, no backend.</span>
+    </p>
+    <p>
+      <span lang="zh-Hant">沒有可用登入時才退回本機資料，且畫面會標註資料年齡，不會把舊值當成即時值。</span>
+      <span lang="en">Without a usable login it falls back to local data and labels how old that data is,
+        rather than presenting a stale number as live.</span>
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap stack">
+    <p class="eyebrow"><span lang="zh-Hant">需要什麼</span><span lang="en">Requirements</span></p>
+    <div class="cards">
+      <div>
+        <h3>macOS 13+ · Apple Silicon</h3>
+        <p><span lang="zh-Hant">目前只提供 arm64 版本。</span><span lang="en">arm64 only for now.</span></p>
+      </div>
+      <div>
+        <h3><span lang="zh-Hant">不需要 Xcode 或 Node</span><span lang="en">No Xcode, no Node</span></h3>
+        <p><span lang="zh-Hant">安裝檔已內含執行所需的 Node，不依賴你的 PATH。</span>
+          <span lang="en">The installer carries the Node build it needs, so nothing depends on your PATH.</span></p>
+      </div>
+      <div>
+        <h3><span lang="zh-Hant">已登入的 Claude Desktop / Codex</span><span lang="en">Signed-in Claude Desktop / Codex</span></h3>
+        <p><span lang="zh-Hant">只登入其中一個也可以，另一邊會顯示無資料。</span>
+          <span lang="en">Either one alone is fine; the other side simply shows no data.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap stack">
+    <p class="eyebrow"><span lang="zh-Hant">遇到問題</span><span lang="en">If something looks wrong</span></p>
+    <div class="faq">
+      <details>
+        <summary><span lang="zh-Hant">Claude 三列都顯示 --%</span><span lang="en">All three Claude rows show --%</span></summary>
+        <p><span lang="zh-Hant">通常是沒有登入 Claude Desktop，或 Keychain 提示被拒。在終端機執行
+          <code>/Applications/AgentUsageWidget.app/Contents/MacOS/AgentUsageWidget --status</code>
+          可以看到它解析到的路徑與設定。</span>
+          <span lang="en">Usually Claude Desktop is not signed in, or the Keychain prompt was declined. Run
+          <code>/Applications/AgentUsageWidget.app/Contents/MacOS/AgentUsageWidget --status</code>
+          to see the paths and settings it resolved.</span></p>
+      </details>
+      <details>
+        <summary><span lang="zh-Hant">macOS 一直跳出 Claude Safe Storage 的 Keychain 提示</span>
+          <span lang="en">macOS keeps asking for Claude Safe Storage</span></summary>
+        <p><span lang="zh-Hant">「允許」只授權一次，每分鐘刷新時會再問；選「永遠允許」可以不再跳出，
+          代價是本機的 <code>security</code> 指令之後可讀取該項目。自用機器通常可接受，
+          共用機器建議選「允許」。</span>
+          <span lang="en">"Allow" grants one refresh, so it asks again a minute later. "Always Allow" stops
+          the prompts, at the cost of letting the local <code>security</code> command read that item later.
+          Fine on a personal machine; prefer "Allow" on a shared one.</span></p>
+      </details>
+      <details>
+        <summary><span lang="zh-Hant">Codex 數字和 Codex App 不同，還標了資料年齡</span>
+          <span lang="en">Codex numbers differ from the Codex app and show an age</span></summary>
+        <p><span lang="zh-Hant">表示沒有可用的 <code>auth.json</code>，正在使用 Codex CLI 留下的舊紀錄。
+          重新登入 Codex 後刷新即可。</span>
+          <span lang="en">That means there is no usable <code>auth.json</code>, so it is reading old records left
+          by the Codex CLI. Sign in to Codex again and refresh.</span></p>
+      </details>
+      <details>
+        <summary><span lang="zh-Hant">想完整移除</span><span lang="en">Removing it completely</span></summary>
+        <p><span lang="zh-Hant">在小工具上按右鍵取消「開機自動啟動」並結束，然後刪除
+          <code>/Applications/AgentUsageWidget.app</code>、<code>~/.agent-usage-widget</code> 與
+          <code>~/.claude/skills/agent-usage-widget</code>。</span>
+          <span lang="en">Right-click the widget, turn off launch at login and quit, then delete
+          <code>/Applications/AgentUsageWidget.app</code>, <code>~/.agent-usage-widget</code> and
+          <code>~/.claude/skills/agent-usage-widget</code>.</span></p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">Agent Usage Widget 0.1.0 · macOS · arm64</p>
+    <p>
+      <span lang="zh-Hant">這不是 Anthropic、OpenAI 或 GitHub 的官方工具，與三者無關。
+        額度數字僅供參考，請以各服務自己的頁面為準。</span>
+      <span lang="en">Not an official Anthropic, OpenAI or GitHub tool, and not affiliated with any of them.
+        Treat the numbers as informational; each service's own page is authoritative.</span>
+    </p>
+  </div>
+</footer>
+
+<script>
+  // Language is a URL-free, cookie-free preference: remembered in localStorage, defaulting
+  // to Chinese only when the browser actually asks for Chinese.
+  (function () {
+    var buttons = document.querySelectorAll("[data-set-lang]");
+
+    function apply(lang) {
+      document.documentElement.setAttribute("data-lang", lang);
+      document.documentElement.setAttribute("lang", lang === "zh" ? "zh-Hant" : "en");
+      buttons.forEach(function (button) {
+        button.setAttribute("aria-pressed", String(button.dataset.setLang === lang));
+      });
+    }
+
+    var stored = null;
+    try { stored = localStorage.getItem("lang"); } catch (error) { /* private mode */ }
+    apply(stored === "en" || stored === "zh"
+      ? stored
+      : (navigator.language || "").toLowerCase().indexOf("zh") === 0 ? "zh" : "en");
+
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        var lang = button.dataset.setLang;
+        apply(lang);
+        try { localStorage.setItem("lang", lang); } catch (error) { /* private mode */ }
+      });
+    });
+  })();
+</script>
+</body>
+</html>
