@@ -1,0 +1,100 @@
+name: "Workflow research / 工作流研究"
+description: "Share an anonymized Claude Code or Codex workflow that quota, cache, or interruption makes difficult."
+title: "[Workflow research] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form creates a **public GitHub issue**. Please describe only an anonymized workflow.
+
+        這份表單會建立**公開 GitHub issue**。請只描述匿名化的工作流。
+
+        Do not paste or attach session logs, prompts, code, project or customer names, screenshots, cookies, tokens, organization or account IDs, email addresses, or other personal data.
+
+        請勿貼上或附加 session log、prompt、程式碼、專案或客戶名稱、截圖、cookie、token、organization／account ID、電子郵件或其他個人資料。
+
+  - type: dropdown
+    id: agent
+    attributes:
+      label: "Agent workflow / 使用的 Agent"
+      description: "Which workflow are you describing? / 這次描述哪一種工作流？"
+      options:
+        - "Claude Code"
+        - "Codex"
+        - "Claude Code and Codex / 兩者都使用"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: "Usage frequency / 使用頻率"
+      description: "How often do you use this workflow? / 你多常使用這個工作流？"
+      options:
+        - "Daily / 每天"
+        - "Several times a week / 每週數次"
+        - "About weekly / 約每週一次"
+        - "Tried briefly / 只短暫試用"
+    validations:
+      required: true
+
+  - type: textarea
+    id: workflow
+    attributes:
+      label: "Anonymized workflow / 匿名化工作流"
+      description: "Describe the recurring task and desired outcome without names, code, prompts, or logs. / 請描述重複任務與想完成的結果，不要包含名稱、程式碼、prompt 或 log。"
+      placeholder: "Example: I use multiple MCP tools during long refactoring sessions and need to know which category is concentrating local observable usage."
+    validations:
+      required: true
+
+  - type: textarea
+    id: interruption
+    attributes:
+      label: "Where the work breaks down / 工作在哪裡中斷"
+      description: "What becomes difficult around quota, cache reuse, or task continuation? State the decision you could not make. / 額度、cache reuse 或任務接續造成什麼困難？請說明當時無法做出的決策。"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: understood
+    attributes:
+      label: "Free facts you understood / 能理解的 Free facts"
+      description: "Select every item whose meaning was clear. This is comprehension research, not a feature request. / 勾選語意清楚的項目；這是理解度研究，不是功能承諾。"
+      options:
+        - label: "A finding states what changed, its evidence, and a safe next step / 發現會說明變化、證據與安全的下一步"
+        - label: "Claude and Codex attribution must be read separately / Claude 與 Codex 歸因必須分開閱讀"
+        - label: "Tool or MCP attribution describes observed result content, not official quota or call count / 工具或 MCP 歸因描述觀測到的結果內容，不是官方額度或呼叫次數"
+        - label: "Coverage describes what local records include and exclude / Coverage 說明本機記錄涵蓋與排除的範圍"
+        - label: "Checkpoint appears as a local handoff action; the host owns wakeup and continuation / Checkpoint 是本機交接操作；喚醒與續跑由 host 管理"
+
+  - type: checkboxes
+    id: valuable
+    attributes:
+      label: "Potentially valuable deeper workflow / 可能有價值的深入工作流"
+      description: "What would be valuable enough to evaluate further? Selection does not promise a product or date. / 哪些問題值得進一步驗證？勾選不代表產品或日期承諾。"
+      options:
+        - label: "Provider-specific session drill-down and longer comparisons / 分 provider 的 Session 深入歸因與較長比較"
+        - label: "Cache anomaly duration and relative impact, without guessing causes / Cache anomaly 的持續時間與相對影響，不猜原因"
+        - label: "A continuation guard that proposes a checkpoint but preserves user authorization / 提議 checkpoint、但保留使用者授權的 continuation guard"
+        - label: "Pacing estimates with ranges and confidence / 附區間與信心度的 pacing 估算"
+        - label: "The Free workflow is sufficient / Free 工作流已足夠"
+
+  - type: dropdown
+    id: interview
+    attributes:
+      label: "Follow-up interview / 後續訪談"
+      description: "May the maintainer ask follow-up questions in this public issue? Do not provide contact details. / 維護者能否直接在這個公開 issue 追問？請勿提供聯絡資料。"
+      options:
+        - "Yes, in this GitHub issue / 可以，在這個 GitHub issue 內"
+        - "Maybe, ask here first / 可能，請先在這裡詢問"
+        - "No follow-up / 不接受後續訪談"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: "Public-data confirmation / 公開資料確認"
+      options:
+        - label: "I understand this issue is public and I removed logs, prompts, code, names, screenshots, credentials, identifiers, contact details, and personal or customer data. / 我知道此 issue 是公開的，且已移除 log、prompt、程式碼、名稱、截圖、憑證、識別碼、聯絡資料與個人或客戶資料。"
+          required: true
