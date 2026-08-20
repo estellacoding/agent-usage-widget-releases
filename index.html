@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <title>Agent Usage Widget — 在額度中斷前先看見</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="A native macOS widget for seeing remaining Claude and Codex quota, reset timing, and observable local usage before an interruption.">
+<meta name="description" content="A native macOS widget for seeing remaining Claude and Codex quota and reset timing before an interruption.">
 <meta property="og:title" content="Agent Usage Widget">
-<meta property="og:description" content="See remaining Claude and Codex quota, reset timing, and observable local usage before an interruption.">
+<meta property="og:description" content="See remaining Claude and Codex quota and reset timing before an interruption.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://estellacoding.github.io/agent-usage-widget-releases/assets/og.png">
 <meta property="og:image:width" content="1200">
@@ -275,6 +275,12 @@
   }
   .window-bar i { width: 0.62rem; height: 0.62rem; border-radius: 50%; background: #d8d8d8; }
   .window-shell img { width: 100%; height: auto; }
+  .quota-card-shell {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
   .shot-caption { margin-top: 0.85rem; color: var(--quiet); font-size: 0.76rem; text-align: center; }
 
   .trust-strip { border-block: 1px solid var(--line); background: var(--surface); }
@@ -411,6 +417,7 @@
     .trust-item:nth-child(2) { border-right: 0; }
     .trust-item:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
     .window-shell { border-radius: var(--radius-sm); }
+    .quota-card-shell { border-radius: 0; }
     .window-bar { height: 1.7rem; }
   }
 
@@ -457,12 +464,12 @@
           <span lang="en">See the limit <strong>before it interrupts you.</strong></span>
         </h1>
         <p class="hero-lede">
-          <span lang="zh-Hant">把 Claude 與 Codex 的剩餘額度、重置時間，以及有證據的本機異常與歸因，放在安靜的 macOS 原生工具裡。</span>
-          <span lang="en">Keep remaining Claude and Codex quota, reset timing, and evidence-backed local findings in one quiet native macOS utility.</span>
+          <span lang="zh-Hant">把 Claude 與 Codex 的剩餘額度與重置時間，放在安靜、可點擊的 macOS 原生卡片裡。</span>
+          <span lang="en">Keep remaining Claude and Codex quota and reset timing in quiet, clickable native macOS cards.</span>
         </p>
         <div class="actions">
-          <a class="button button--primary" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.0-arm64.dmg">
-            <span lang="zh-Hant">下載 0.2.0 .dmg</span><span lang="en">Download 0.2.0 .dmg</span>
+          <a class="button button--primary" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.1-arm64.dmg">
+            <span lang="zh-Hant">下載 0.2.1 .dmg</span><span lang="en">Download 0.2.1 .dmg</span>
           </a>
           <a class="button" href="#privacy"><span lang="zh-Hant">了解資料處理</span><span lang="en">How data is handled</span></a>
         </div>
@@ -473,10 +480,9 @@
       </div>
 
       <figure class="hero-shot">
-        <div class="window-shell">
-          <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i></div>
-          <img lang="zh-Hant" src="assets/detail-findings-zh.png" width="1440" height="1040" alt="Agent Usage Widget 本機用量發現，顯示高於個人基準的快取重建範例">
-          <img lang="en" src="assets/detail-findings-en.png" width="1440" height="1040" alt="Agent Usage Widget local usage findings showing a sample cache rebuild anomaly">
+        <div class="window-shell quota-card-shell">
+          <img lang="zh-Hant" src="assets/quota-cards-zh.png" width="712" height="352" alt="Agent Usage Widget 的 Codex 與 Claude 剩餘額度卡片">
+          <img lang="en" src="assets/quota-cards-en.png" width="712" height="352" alt="Agent Usage Widget Codex and Claude remaining-quota cards">
         </div>
         <figcaption class="shot-caption">
           <span lang="zh-Hant">正式 AppKit 畫面 · 固定範例資料，不含私人紀錄</span>
@@ -500,29 +506,29 @@
       <div class="preview-head">
         <div class="stack reading">
           <p class="eyebrow"><span lang="zh-Hant">真實產品畫面</span><span lang="en">The real product</span></p>
-          <h2><span lang="zh-Hant">一眼看額度，需要時理解本機活動。</span><span lang="en">Glance at quota. Understand local activity when needed.</span></h2>
+          <h2><span lang="zh-Hant">一眼看額度，點一下看完整週期。</span><span lang="en">Glance at quota. Click for every window.</span></h2>
           <p class="section-lede">
-            <span lang="zh-Hant">桌面卡只保留剩餘量、倒數與新鮮度；Findings 只提出有足夠證據的異常，Attribution 再把 Claude 與 Codex 分開解釋。</span>
-            <span lang="en">The desktop glance stays focused on remaining quota, countdowns, and freshness. Findings surface only evidence-backed anomalies; Attribution explains Claude and Codex separately.</span>
+            <span lang="zh-Hant">桌面卡只保留剩餘量與重置倒數；點擊任一卡片，即可在卡片下方查看 5 小時、每週及模型限定週額度。</span>
+            <span lang="en">Desktop cards keep remaining quota and reset countdowns in view. Click either card to open 5-hour, weekly, and model-scoped weekly details directly below.</span>
           </p>
         </div>
         <div class="preview-tabs" role="tablist" aria-label="Product screenshots">
-          <button id="preview-findings" type="button" role="tab" data-preview="findings" aria-controls="product-preview" aria-selected="true" tabindex="0"><span lang="zh-Hant">發現</span><span lang="en">Findings</span></button>
-          <button id="preview-attribution" type="button" role="tab" data-preview="attribution" aria-controls="product-preview" aria-selected="false" tabindex="-1"><span lang="zh-Hant">歸因</span><span lang="en">Attribution</span></button>
+          <button id="preview-cards" type="button" role="tab" data-preview="cards" aria-controls="product-preview" aria-selected="true" tabindex="0"><span lang="zh-Hant">額度卡</span><span lang="en">Quota cards</span></button>
+          <button id="preview-details" type="button" role="tab" data-preview="details" aria-controls="product-preview" aria-selected="false" tabindex="-1"><span lang="zh-Hant">詳細額度</span><span lang="en">Quota details</span></button>
         </div>
       </div>
 
-      <div class="product-stage" id="product-preview" role="tabpanel" aria-labelledby="preview-findings" aria-live="polite">
+      <div class="product-stage" id="product-preview" role="tabpanel" aria-labelledby="preview-cards" aria-live="polite">
         <div class="window-shell">
           <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i></div>
-          <img lang="zh-Hant" data-preview-shot="findings" src="assets/detail-findings-zh.png" width="1440" height="1040" alt="繁中本機用量發現，使用固定範例資料">
-          <img lang="zh-Hant" data-preview-shot="attribution" src="assets/detail-attribution-zh.png" width="1440" height="1040" alt="繁中 Claude 與 Codex 分區活動歸因，使用固定範例資料" hidden>
-          <img lang="en" data-preview-shot="findings" src="assets/detail-findings-en.png" width="1440" height="1040" alt="English local usage findings using fixed sample data">
-          <img lang="en" data-preview-shot="attribution" src="assets/detail-attribution-en.png" width="1440" height="1040" alt="English provider-specific Claude and Codex attribution using fixed sample data" hidden>
+          <img lang="zh-Hant" data-preview-shot="cards" src="assets/quota-cards-zh.png" width="712" height="352" alt="繁中 Codex 與 Claude 剩餘額度卡片，使用固定範例資料">
+          <img lang="zh-Hant" data-preview-shot="details" src="assets/quota-details-zh.png" width="660" height="560" alt="繁中 Claude 詳細額度，包含每週 Fable 額度" hidden>
+          <img lang="en" data-preview-shot="cards" src="assets/quota-cards-en.png" width="712" height="352" alt="English Codex and Claude remaining-quota cards using fixed sample data">
+          <img lang="en" data-preview-shot="details" src="assets/quota-details-en.png" width="660" height="560" alt="English Claude quota details including the Fable weekly limit" hidden>
         </div>
         <p class="product-caption">
-          <span lang="zh-Hant">所有畫面均由正式 <span class="mono">DetailWindowController</span> 與固定合成 report 產生。</span>
-          <span lang="en">Every screen is rendered by the production <span class="mono">DetailWindowController</span> with a fixed synthetic report.</span>
+          <span lang="zh-Hant">所有畫面均由正式 AppKit 額度元件與固定合成資料產生，不含私人紀錄。</span>
+          <span lang="en">Every screen is rendered by the production AppKit quota views with fixed synthetic data and no private records.</span>
         </p>
       </div>
 
@@ -532,12 +538,12 @@
           <div class="stack stack--tight"><h3><span lang="zh-Hant">先知道還剩多少</span><span lang="en">Know what remains</span></h3><p><span lang="zh-Hant">Claude 與 Codex 各視窗都使用同一語意：大數字與進度軌代表剩餘，不把「無限制」畫成錯誤。</span><span lang="en">Every Claude and Codex window uses one meaning: the number and track show what remains, and no-limit plans never look like failures.</span></p></div>
         </article>
         <article class="value-card">
-          <span class="value-number">02 / FINDINGS</span>
-          <div class="stack stack--tight"><h3><span lang="zh-Hant">只提出值得注意的變化</span><span lang="en">Surface changes worth attention</span></h3><p><span lang="zh-Hant">24 小時變化、重工作階段、快取重建、subagent 與工具結果只有在證據門檻成立時才出現，並附限制與安全下一步。</span><span lang="en">24-hour changes, heavy sessions, cache rebuilds, subagents, and tool results appear only when evidence thresholds are met—with limitations and a safe next step.</span></p></div>
+          <span class="value-number">02 / DETAILS</span>
+          <div class="stack stack--tight"><h3><span lang="zh-Hant">點擊後就在卡片下方展開</span><span lang="en">Details open below the cards</span></h3><p><span lang="zh-Hant">不用離開桌面位置即可查看 5 小時、每週與 Claude 模型限定週額度，標題列也保留標準 macOS 間距。</span><span lang="en">See 5-hour, weekly, and Claude model-scoped weekly quota without losing context, with standard macOS title-bar spacing.</span></p></div>
         </article>
         <article class="value-card">
-          <span class="value-number">03 / ATTRIBUTION</span>
-          <div class="stack stack--tight"><h3><span lang="zh-Hant">每個 provider 使用自己的分母</span><span lang="en">Keep each provider in its own denominator</span></h3><p><span lang="zh-Hant">Claude 與 Codex 的專案、模型與工作階段分開計算；Codex 沒有同等工具或 subagent 欄位時保持 unavailable，不補成 0%。</span><span lang="en">Claude and Codex project, model, and session shares stay separate. Missing Codex tool or subagent fields remain unavailable instead of becoming 0%.</span></p></div>
+          <span class="value-number">03 / WINDOWS</span>
+          <div class="stack stack--tight"><h3><span lang="zh-Hant">每個數字都說清楚週期</span><span lang="en">Every number names its window</span></h3><p><span lang="zh-Hant">Claude 的 Fable 額度明確標示為每週；Codex 沒有 5 小時上限時，主卡直接改顯示每週額度。</span><span lang="en">Claude identifies Fable as weekly. When Codex has no 5-hour limit, its main card shows weekly quota instead.</span></p></div>
         </article>
       </div>
     </div>
@@ -547,12 +553,12 @@
     <div class="wrap">
       <div class="stack reading">
         <p class="eyebrow"><span lang="zh-Hant">如何運作</span><span lang="en">How it works</span></p>
-        <h2><span lang="zh-Hant">登入材料留在 native bridge；分析留在本機。</span><span lang="en">Credentials stay in the native bridge. Analysis stays local.</span></h2>
-        <p class="section-lede"><span lang="zh-Hant">官方額度與本機活動分析是兩條分開的資料路徑，不把 token、cookie 或 organization ID 交給分析引擎。</span><span lang="en">Official quota and local activity analysis use separate data paths. Tokens, cookies, and organization IDs never go to the analysis engine.</span></p>
+        <h2><span lang="zh-Hant">登入材料只留在 native bridge。</span><span lang="en">Credentials stay in the native bridge.</span></h2>
+        <p class="section-lede"><span lang="zh-Hant">App 只把通過 schema 驗證的額度百分比與重置時間交給畫面，不把 token、cookie 或 organization ID 寫入額度快取。</span><span lang="en">The app passes only schema-validated quota percentages and reset timing to the UI; tokens, cookies, and organization IDs are never written to the quota cache.</span></p>
       </div>
       <div class="flow">
         <article class="flow-step"><span class="mono">01 · QUOTA</span><h3><span lang="zh-Hant">向服務自己的端點查詢</span><span lang="en">Ask each service directly</span></h3><p><span lang="zh-Hant">Swift bridge 使用既有 Claude Desktop／Codex 登入，只把通過 schema 驗證的百分比與時間交給 UI。</span><span lang="en">The Swift bridge uses existing Claude Desktop and Codex sign-ins, passing only schema-validated percentages and timing to the UI.</span></p></article>
-        <article class="flow-step"><span class="mono">02 · LOCAL</span><h3><span lang="zh-Hant">讀取本機 CLI 記錄</span><span lang="en">Read local CLI records</span></h3><p><span lang="zh-Hant">分析只讀 Claude Code 與 Codex CLI 記錄；Desktop 與 Web 用量不包含在結果裡。</span><span lang="en">Analysis reads Claude Code and Codex CLI records only. Desktop and web usage are excluded from the result.</span></p></article>
+        <article class="flow-step"><span class="mono">02 · NORMALIZE</span><h3><span lang="zh-Hant">只保留額度需要的欄位</span><span lang="en">Keep only quota fields</span></h3><p><span lang="zh-Hant">Native bridge 將回應縮減為剩餘百分比、重置時間、模型標籤與狀態，不把登入材料交給介面。</span><span lang="en">The native bridge reduces responses to remaining percentage, reset timing, model label, and status without exposing credentials to the UI.</span></p></article>
         <article class="flow-step"><span class="mono">03 · STATE</span><h3><span lang="zh-Hant">把不確定性寫在畫面上</span><span lang="en">Show uncertainty in the UI</span></h3><p><span lang="zh-Hant">Live、Cached、Stale、Unavailable 與資料年齡都有文字；服務自己的頁面始終是最終依據。</span><span lang="en">Live, Cached, Stale, Unavailable, and data age are always textual. Provider pages remain authoritative.</span></p></article>
       </div>
     </div>
@@ -566,7 +572,7 @@
         <p class="section-lede"><span lang="zh-Hant">Live 額度仍會連到 Claude／OpenAI 自己的 usage endpoint，因此這不是「完全離線」；安全邊界在於登入材料不離開 native bridge。</span><span lang="en">Live quota still connects to Claude and OpenAI usage endpoints, so this is not fully offline. The security boundary is that login material never leaves the native bridge.</span></p>
       </div>
       <div class="privacy-grid">
-        <article class="privacy-card"><h3><span lang="zh-Hant">會讀取與保存</span><span lang="en">Read and retained</span></h3><ul class="privacy-list"><li><span lang="zh-Hant">記憶體中的既有登入材料，用於各服務自己的 usage endpoint</span><span lang="en">Existing login material in memory, for each service's own usage endpoint</span></li><li><span lang="zh-Hant">本機 Claude Code／Codex CLI 記錄，用於 Findings 與 provider-specific Attribution</span><span lang="en">Local Claude Code and Codex CLI records for Findings and provider-specific Attribution</span></li><li><span lang="zh-Hant">快取的非敏感百分比、狀態與時間戳</span><span lang="en">Cached non-sensitive percentages, status, and timestamps</span></li></ul></article>
+        <article class="privacy-card"><h3><span lang="zh-Hant">會讀取與保存</span><span lang="en">Read and retained</span></h3><ul class="privacy-list"><li><span lang="zh-Hant">記憶體中的既有登入材料，用於各服務自己的 usage endpoint</span><span lang="en">Existing login material in memory, for each service's own usage endpoint</span></li><li><span lang="zh-Hant">各服務回傳的額度百分比、重置時間與模型標籤</span><span lang="en">Quota percentages, reset timing, and model labels returned by each service</span></li><li><span lang="zh-Hant">快取的非敏感百分比、狀態與時間戳</span><span lang="en">Cached non-sensitive percentages, status, and timestamps</span></li></ul></article>
         <article class="privacy-card privacy-card--never"><h3><span lang="zh-Hant">絕不交給產品或第三方</span><span lang="en">Never sent to the product or third parties</span></h3><ul class="privacy-list"><li><span lang="zh-Hant">Claude cookie、Keychain secret、organization ID</span><span lang="en">Claude cookies, Keychain secrets, or organization IDs</span></li><li><span lang="zh-Hant">Codex OAuth token 或 account ID</span><span lang="en">Codex OAuth tokens or account IDs</span></li><li><span lang="zh-Hant">本機 session 內容、專案名稱或私人 screenshot</span><span lang="en">Local session content, project names, or private screenshots</span></li></ul></article>
       </div>
       <p class="privacy-note"><span lang="zh-Hant">Claude Keychain 存取可以獨立停用；Codex、Widget 與開機啟動控制仍可使用。</span><span lang="en">Claude Keychain access can be disabled independently while Codex, the Widget, and login-item controls keep working.</span></p>
@@ -578,11 +584,11 @@
       <div class="stack reading">
         <p class="eyebrow"><span lang="zh-Hant">安裝</span><span lang="en">Install</span></p>
         <h2><span lang="zh-Hant">選擇拖曳安裝，或一次完成設定。</span><span lang="en">Drag it in, or complete setup in one pass.</span></h2>
-        <p class="section-lede"><span lang="zh-Hant">兩個安裝檔都是 0.2.0 arm64，內含經審查的 Node runtime；你的 Mac 不需要先裝 Node 或 Xcode。</span><span lang="en">Both 0.2.0 arm64 installers carry the reviewed Node runtime. Your Mac does not need Node or Xcode first.</span></p>
+        <p class="section-lede"><span lang="zh-Hant">兩個安裝檔都是 0.2.1 arm64，內含經審查的 Node runtime；你的 Mac 不需要先裝 Node 或 Xcode。</span><span lang="en">Both 0.2.1 arm64 installers carry the reviewed Node runtime. Your Mac does not need Node or Xcode first.</span></p>
       </div>
       <div class="install-grid">
-        <article class="installer installer--primary"><div class="stack stack--tight"><span class="installer-meta">DMG · 0.2.0 · ARM64</span><h3><span lang="zh-Hant">拖到 Applications</span><span lang="en">Drag to Applications</span></h3><p><span lang="zh-Hant">適合想自己決定何時啟用開機啟動與安裝 Agent Skill 的使用者。</span><span lang="en">Best when you want to choose when to enable launch at login and install the Agent Skill.</span></p></div><a class="button button--primary" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.0-arm64.dmg"><span lang="zh-Hant">下載 .dmg</span><span lang="en">Download .dmg</span></a></article>
-        <article class="installer"><div class="stack stack--tight"><span class="installer-meta">PKG · 0.2.0 · ARM64</span><h3><span lang="zh-Hant">一併完成本機設定</span><span lang="en">Complete local setup</span></h3><p><span lang="zh-Hant">安裝 App，並設定開機啟動與 Agent Skill；所有內容仍可完整移除。</span><span lang="en">Installs the app, configures launch at login, and adds the Agent Skill. Everything remains fully removable.</span></p></div><a class="button" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.0-arm64.pkg"><span lang="zh-Hant">下載 .pkg</span><span lang="en">Download .pkg</span></a></article>
+        <article class="installer installer--primary"><div class="stack stack--tight"><span class="installer-meta">DMG · 0.2.1 · ARM64</span><h3><span lang="zh-Hant">拖到 Applications</span><span lang="en">Drag to Applications</span></h3><p><span lang="zh-Hant">適合想自己決定何時啟用開機啟動與安裝 Agent Skill 的使用者。</span><span lang="en">Best when you want to choose when to enable launch at login and install the Agent Skill.</span></p></div><a class="button button--primary" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.1-arm64.dmg"><span lang="zh-Hant">下載 .dmg</span><span lang="en">Download .dmg</span></a></article>
+        <article class="installer"><div class="stack stack--tight"><span class="installer-meta">PKG · 0.2.1 · ARM64</span><h3><span lang="zh-Hant">一併完成本機設定</span><span lang="en">Complete local setup</span></h3><p><span lang="zh-Hant">安裝 App，並設定開機啟動與 Agent Skill；所有內容仍可完整移除。</span><span lang="en">Installs the app, configures launch at login, and adds the Agent Skill. Everything remains fully removable.</span></p></div><a class="button" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.1-arm64.pkg"><span lang="zh-Hant">下載 .pkg</span><span lang="en">Download .pkg</span></a></article>
       </div>
       <aside class="gatekeeper"><h3><span lang="zh-Hant">第一次開啟：正常通過 Gatekeeper</span><span lang="en">First launch: verified by Gatekeeper</span></h3><p><span lang="zh-Hant">DMG 與 PKG 都使用 Developer ID 簽章，並已由 Apple 公證與附加票據；不需要繞過 macOS 安全性設定。</span><span lang="en">Both the DMG and PKG are Developer ID signed, Apple-notarized, and stapled. No macOS security bypass is required.</span></p><ol><li><span lang="zh-Hant">下載後照上方方式安裝並正常開啟 App。</span><span lang="en">Download, install using either option above, and open the app normally.</span></li><li><span lang="zh-Hant">macOS 會用 Developer ID 與公證票據驗證完整性。</span><span lang="en">macOS verifies integrity using the Developer ID signature and notarization ticket.</span></li><li><span lang="zh-Hant">若系統仍顯示無法驗證或檔案損壞，請勿繞過警告；重新下載並核對 release checksum。</span><span lang="en">If macOS still reports an unverifiable or damaged file, do not bypass the warning; re-download it and verify the release checksum.</span></li></ol></aside>
 
@@ -605,7 +611,7 @@
 
 <footer>
   <div class="wrap footer-grid">
-    <div class="stack stack--tight"><strong>Agent Usage Widget 0.2.0</strong><p class="footer-copy"><span lang="zh-Hant">macOS 13+ · Apple Silicon · Developer ID 簽章、Apple 已公證。非 Anthropic、OpenAI 或 GitHub 官方工具，也與三者無關。額度數字僅供參考。</span><span lang="en">macOS 13+ · Apple Silicon · Developer ID signed and Apple-notarized. Not an official Anthropic, OpenAI, or GitHub tool and not affiliated with them. Quota values are informational.</span></p></div>
+    <div class="stack stack--tight"><strong>Agent Usage Widget 0.2.1</strong><p class="footer-copy"><span lang="zh-Hant">macOS 13+ · Apple Silicon · Developer ID 簽章、Apple 已公證。非 Anthropic、OpenAI 或 GitHub 官方工具，也與三者無關。額度數字僅供參考。</span><span lang="en">macOS 13+ · Apple Silicon · Developer ID signed and Apple-notarized. Not an official Anthropic, OpenAI, or GitHub tool and not affiliated with them. Quota values are informational.</span></p></div>
     <div class="footer-links"><a href="#product"><span lang="zh-Hant">產品</span><span lang="en">Product</span></a><a href="#privacy"><span lang="zh-Hant">隱私</span><span lang="en">Privacy</span></a><a href="#install"><span lang="zh-Hant">安裝</span><span lang="en">Install</span></a><a href="https://github.com/estellacoding/agent-usage-widget-releases/releases"><span lang="zh-Hant">版本紀錄</span><span lang="en">Releases</span></a></div>
   </div>
 </footer>
