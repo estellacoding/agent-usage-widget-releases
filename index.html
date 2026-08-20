@@ -420,7 +420,7 @@
   }
 </style>
 </head>
-<body>
+<body data-release-trust="notarized">
 
 <header class="site-header">
   <div class="wrap nav">
@@ -468,7 +468,7 @@
         </div>
         <div class="hero-meta" aria-label="System requirements">
           <span>macOS 13+</span><span>Apple Silicon</span>
-          <span lang="zh-Hant">ad-hoc 簽章 · 未公證</span><span lang="en">ad-hoc signed · not notarized</span>
+          <span lang="zh-Hant">Developer ID 簽章 · Apple 已公證</span><span lang="en">Developer ID signed · Apple notarized</span>
         </div>
       </div>
 
@@ -584,7 +584,7 @@
         <article class="installer installer--primary"><div class="stack stack--tight"><span class="installer-meta">DMG · 0.2.0 · ARM64</span><h3><span lang="zh-Hant">拖到 Applications</span><span lang="en">Drag to Applications</span></h3><p><span lang="zh-Hant">適合想自己決定何時啟用開機啟動與安裝 Agent Skill 的使用者。</span><span lang="en">Best when you want to choose when to enable launch at login and install the Agent Skill.</span></p></div><a class="button button--primary" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.0-arm64.dmg"><span lang="zh-Hant">下載 .dmg</span><span lang="en">Download .dmg</span></a></article>
         <article class="installer"><div class="stack stack--tight"><span class="installer-meta">PKG · 0.2.0 · ARM64</span><h3><span lang="zh-Hant">一併完成本機設定</span><span lang="en">Complete local setup</span></h3><p><span lang="zh-Hant">安裝 App，並設定開機啟動與 Agent Skill；所有內容仍可完整移除。</span><span lang="en">Installs the app, configures launch at login, and adds the Agent Skill. Everything remains fully removable.</span></p></div><a class="button" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.0-arm64.pkg"><span lang="zh-Hant">下載 .pkg</span><span lang="en">Download .pkg</span></a></article>
       </div>
-      <aside class="gatekeeper"><h3><span lang="zh-Hant">第一次開啟：需在「隱私權與安全性」按一次「仍要打開」</span><span lang="en">First launch: use Privacy &amp; Security → Open Anyway once</span></h3><p><span lang="zh-Hant">目前版本是 ad-hoc 簽章、尚未 Apple 公證。macOS 15 已移除舊的「右鍵 → 打開」捷徑。</span><span lang="en">The current build is ad-hoc signed and not Apple-notarized. macOS 15 removed the old right-click → Open shortcut.</span></p><ol><li><span lang="zh-Hant">先雙擊 App，關閉 macOS 的阻擋提示。</span><span lang="en">Double-click the app, then dismiss the macOS warning.</span></li><li><span lang="zh-Hant">前往系統設定 → 隱私權與安全性。</span><span lang="en">Open System Settings → Privacy &amp; Security.</span></li><li><span lang="zh-Hant">在被阻擋訊息旁按「仍要打開」並確認。</span><span lang="en">Click Open Anyway beside the blocked-app message and confirm.</span></li></ol></aside>
+      <aside class="gatekeeper"><h3><span lang="zh-Hant">第一次開啟：正常通過 Gatekeeper</span><span lang="en">First launch: verified by Gatekeeper</span></h3><p><span lang="zh-Hant">DMG 與 PKG 都使用 Developer ID 簽章，並已由 Apple 公證與附加票據；不需要繞過 macOS 安全性設定。</span><span lang="en">Both the DMG and PKG are Developer ID signed, Apple-notarized, and stapled. No macOS security bypass is required.</span></p><ol><li><span lang="zh-Hant">下載後照上方方式安裝並正常開啟 App。</span><span lang="en">Download, install using either option above, and open the app normally.</span></li><li><span lang="zh-Hant">macOS 會用 Developer ID 與公證票據驗證完整性。</span><span lang="en">macOS verifies integrity using the Developer ID signature and notarization ticket.</span></li><li><span lang="zh-Hant">若系統仍顯示無法驗證或檔案損壞，請勿繞過警告；重新下載並核對 release checksum。</span><span lang="en">If macOS still reports an unverifiable or damaged file, do not bypass the warning; re-download it and verify the release checksum.</span></li></ol></aside>
 
       <div class="validation-callout"><div class="stack stack--tight"><h3><span lang="zh-Hant">Pro 還在問題驗證階段</span><span lang="en">Pro is still in problem validation</span></h3><p><span lang="zh-Hant">目前只出貨 Free 已完成能力。不承諾日期，也不在 App 裡放鎖頭卡或用假資料冒充未完成的預測、告警或成本功能。研究表單會建立公開 GitHub issue；請只描述匿名化工作流，不要貼 log、專案／客戶名稱、截圖、憑證或個人資料。</span><span lang="en">Only completed Free capabilities ship today. There is no promised date, and the app does not use lock cards or fake data to imply unfinished forecasts, alerts, or cost features. The research form creates a public GitHub issue; share only an anonymized workflow—no logs, project or customer names, screenshots, credentials, or personal data.</span></p></div><a class="button" href="https://github.com/estellacoding/agent-usage-widget-releases/issues/new?template=workflow-research.yml"><span lang="zh-Hant">分享想解決的工作流</span><span lang="en">Share a workflow</span></a></div>
     </div>
@@ -605,7 +605,7 @@
 
 <footer>
   <div class="wrap footer-grid">
-    <div class="stack stack--tight"><strong>Agent Usage Widget 0.2.0</strong><p class="footer-copy"><span lang="zh-Hant">macOS 13+ · Apple Silicon · ad-hoc 簽章、尚未公證。非 Anthropic、OpenAI 或 GitHub 官方工具，也與三者無關。額度數字僅供參考。</span><span lang="en">macOS 13+ · Apple Silicon · ad-hoc signed and not notarized. Not an official Anthropic, OpenAI, or GitHub tool and not affiliated with them. Quota values are informational.</span></p></div>
+    <div class="stack stack--tight"><strong>Agent Usage Widget 0.2.0</strong><p class="footer-copy"><span lang="zh-Hant">macOS 13+ · Apple Silicon · Developer ID 簽章、Apple 已公證。非 Anthropic、OpenAI 或 GitHub 官方工具，也與三者無關。額度數字僅供參考。</span><span lang="en">macOS 13+ · Apple Silicon · Developer ID signed and Apple-notarized. Not an official Anthropic, OpenAI, or GitHub tool and not affiliated with them. Quota values are informational.</span></p></div>
     <div class="footer-links"><a href="#product"><span lang="zh-Hant">產品</span><span lang="en">Product</span></a><a href="#privacy"><span lang="zh-Hant">隱私</span><span lang="en">Privacy</span></a><a href="#install"><span lang="zh-Hant">安裝</span><span lang="en">Install</span></a><a href="https://github.com/estellacoding/agent-usage-widget-releases/releases"><span lang="zh-Hant">版本紀錄</span><span lang="en">Releases</span></a></div>
   </div>
 </footer>
