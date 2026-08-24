@@ -111,8 +111,8 @@
   }
 
   h1, h2, h3 { margin: 0; line-height: 1.08; letter-spacing: -0.025em; text-wrap: balance; }
-  h1 { font-size: clamp(2.65rem, 6.4vw, 5.75rem); font-weight: 720; }
-  h2 { font-size: clamp(2rem, 4.4vw, 3.65rem); font-weight: 690; }
+  h1 { font-size: clamp(2.35rem, 5.2vw, 4.25rem); font-weight: 720; }
+  h2 { font-size: clamp(1.9rem, 3.6vw, 2.9rem); font-weight: 690; }
   h3 { font-size: 1.18rem; font-weight: 660; letter-spacing: -0.01em; }
   p { margin: 0; }
   code, .mono { font-family: var(--mono); }
@@ -202,27 +202,27 @@
   .hero-grid {
     display: grid;
     justify-items: center;
-    gap: clamp(3.5rem, 8vw, 6.5rem);
-    padding-block: clamp(5rem, 10vw, 8.5rem) clamp(4rem, 8vw, 7rem);
+    gap: clamp(2.6rem, 6vw, 4rem);
+    padding-block: clamp(4.5rem, 9vw, 7.5rem) clamp(3.5rem, 7vw, 6rem);
   }
   .hero-copy {
     display: flex;
-    max-width: 58rem;
+    max-width: 56rem;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
     text-align: center;
   }
   .hero-copy h1 strong { color: var(--accent-strong); font-weight: inherit; }
-  .hero-lede { color: var(--muted); font-size: clamp(1.08rem, 1rem + 0.4vw, 1.32rem); max-width: 43rem; }
-  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+  .hero-lede { color: var(--muted); font-size: clamp(1.08rem, 1rem + 0.4vw, 1.32rem); max-width: 46rem; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: center; }
   .button {
     min-height: 3.15rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.55rem;
-    padding: 0.72rem 1.15rem;
+    padding: 0.72rem 1.35rem;
     border: 1px solid var(--line-strong);
     border-radius: 999px;
     background: var(--surface);
@@ -234,46 +234,18 @@
   .button:hover { transform: translateY(-1px); border-color: var(--accent); }
   .button--primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
   .button--primary:hover { background: var(--accent-strong); }
-  .hero-meta { display: flex; flex-wrap: wrap; gap: 0.5rem; color: var(--quiet); font-size: 0.78rem; }
+  .hero-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; color: var(--quiet); font-size: 0.78rem; }
   .hero-meta span { border: 1px solid var(--line); border-radius: 999px; padding: 0.28rem 0.58rem; }
 
-  .hero-shot { position: relative; width: min(100%, 58rem); }
-  .hero-shot::before {
-    content: "";
-    position: absolute;
-    width: 72%;
-    aspect-ratio: 1;
-    inset: -16% -10% auto auto;
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--accent) 18%, transparent);
-    filter: blur(1px);
-  }
-  .window-shell {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius);
-    background: #ffffff;
+  .hero-shot { width: min(100%, 49.5rem); margin: 0; }
+  .shot-stage {
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
     box-shadow: var(--shadow);
-    transform: none;
   }
-  .window-bar {
-    height: 2.25rem;
-    display: flex;
-    align-items: center;
-    gap: 0.42rem;
-    padding-inline: 0.9rem;
-    border-bottom: 1px solid #e5e5e5;
-    background: #f7f7f7;
-  }
-  .window-bar i { width: 0.62rem; height: 0.62rem; border-radius: 50%; background: #d8d8d8; }
-  .window-shell img { width: 100%; height: auto; }
-  .quota-card-shell {
-    overflow: visible;
-    border: 0;
-    background: transparent;
-    box-shadow: none;
-  }
+  .shot-stage img { width: 100%; height: auto; border-radius: var(--radius-sm); }
   .shot-caption { margin-top: 0.85rem; color: var(--quiet); font-size: 0.76rem; text-align: center; }
 
   .trust-strip { border-block: 1px solid var(--line); background: var(--surface); }
@@ -284,62 +256,77 @@
   .trust-item span { color: var(--muted); font-size: 0.78rem; }
   .trust-item strong::before { content: "•"; color: var(--success); margin-right: 0.45rem; }
 
-  .preview-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2rem; align-items: end; }
-  .preview-tabs {
-    display: flex;
-    gap: 0.35rem;
-    padding: 0.28rem;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    background: var(--surface);
-  }
-  .preview-tabs button {
-    appearance: none;
-    border: 0;
-    border-radius: 999px;
-    padding: 0.52rem 0.85rem;
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    font-weight: 640;
-  }
-  .preview-tabs button[aria-selected="true"] { color: var(--accent-ink); background: var(--accent); }
-  .product-stage { margin-top: 2.4rem; }
-  .product-stage .window-shell { transform: none; border-radius: var(--radius-lg); }
-  .product-stage img { width: 100%; }
-  .product-caption { margin-top: 0.95rem; color: var(--quiet); font-size: 0.82rem; text-align: center; }
+  .section-head { display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center; }
+  .section-head .reading { max-width: 46rem; }
 
-  .value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
-  .value-card {
-    min-height: 18rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 2rem;
-    padding: clamp(1.5rem, 3vw, 2.2rem);
+  .features { display: flex; flex-direction: column; gap: 1.5rem; margin-top: clamp(2.5rem, 5vw, 4.25rem); }
+  .feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+    align-items: center;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    padding: clamp(1.6rem, 3.4vw, 2.75rem);
     border: 1px solid var(--line);
-    border-radius: var(--radius);
+    border-radius: var(--radius-lg);
     background: var(--surface);
     box-shadow: var(--shadow-soft);
   }
-  .value-number { color: var(--accent-strong); font-family: var(--mono); font-size: 0.8rem; }
-  .value-card p { color: var(--muted); }
+  .feature--flip .feature-copy { order: 2; }
+  .feature-copy { display: flex; flex-direction: column; gap: 1.1rem; }
+  .feature-index {
+    color: var(--quiet);
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    font-weight: 650;
+    letter-spacing: 0.12em;
+  }
+  .feature-copy h3 { font-size: clamp(1.45rem, 1.2rem + 0.9vw, 1.9rem); font-weight: 690; }
+  .feature-copy > p { color: var(--muted); font-size: 1.02rem; }
+  .bullets { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .bullets li { display: grid; grid-template-columns: 1.05rem 1fr; gap: 0.6rem; font-size: 0.95rem; }
+  .bullets li::before { content: "✓"; color: var(--accent-strong); font-weight: 750; }
+  .feature-art { border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-soft); overflow: hidden; }
+  .feature-art img { width: 100%; height: auto; }
+  .feature-art--plain { border: 0; background: transparent; overflow: visible; }
+  .term {
+    padding: clamp(1.1rem, 2.5vw, 1.6rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface-blue);
+  }
+  .term pre {
+    margin: 0;
+    padding-bottom: 0.2rem;
+    font-family: var(--mono);
+    font-size: 0.84rem;
+    line-height: 1.85;
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .term b { color: var(--accent-strong); font-weight: 650; }
+  .term-caption { margin-top: 0.75rem; color: var(--quiet); font-size: 0.76rem; text-align: center; }
 
-  .privacy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
+  .privacy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: clamp(2.5rem, 5vw, 3.5rem); }
   .privacy-card { padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
   .privacy-card h3 { margin-bottom: 1.2rem; }
   .privacy-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.8rem; color: var(--muted); }
   .privacy-list li { display: grid; grid-template-columns: 1.2rem 1fr; gap: 0.5rem; }
   .privacy-list li::before { content: "✓"; color: var(--success); font-weight: 750; }
   .privacy-card--never .privacy-list li::before { content: "×"; color: var(--danger); }
-  .privacy-note { margin-top: 1rem; color: var(--muted); font-size: 0.9rem; }
+  .privacy-note { margin-top: 1rem; color: var(--muted); font-size: 0.9rem; text-align: center; }
 
-  .install-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.5rem; }
+  .install-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: 50rem;
+    margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+  }
   .installer {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    padding: clamp(1.5rem, 4vw, 2.5rem);
+    padding: clamp(1.5rem, 4vw, 2.25rem);
     border: 1px solid var(--line);
     border-radius: var(--radius);
     background: var(--surface);
@@ -348,37 +335,17 @@
   .installer p { color: var(--muted); }
   .installer .button { margin-top: auto; align-self: flex-start; }
   .installer-meta { color: var(--quiet); font-family: var(--mono); font-size: 0.76rem; }
-  .installer--iphone {
-    border-color: color-mix(in srgb, #607aff 38%, var(--line));
-    background:
-      radial-gradient(circle at 100% 0, color-mix(in srgb, #607aff 14%, transparent), transparent 48%),
-      var(--surface);
-  }
-  .status-pill {
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    min-height: 2rem;
-    padding: 0.25rem 0.65rem;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    color: var(--muted);
-    font-size: 0.78rem;
-    font-weight: 650;
-  }
-  .status-pill::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: #607aff; }
   .gatekeeper {
-    margin-top: 1rem;
+    max-width: 50rem;
+    margin: 1rem auto 0;
     padding: clamp(1.4rem, 3vw, 2rem);
     border-left: 3px solid var(--warning);
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     background: color-mix(in srgb, var(--warning) 8%, var(--surface));
   }
   .gatekeeper p { margin-top: 0.5rem; color: var(--muted); }
-  .gatekeeper ol { margin: 0.9rem 0 0; padding-left: 1.25rem; color: var(--muted); }
 
-  .faq { max-width: 52rem; margin-top: 2.5rem; }
+  .faq { max-width: 52rem; margin: clamp(2.5rem, 5vw, 3.5rem) auto 0; }
   details { border-bottom: 1px solid var(--line); }
   summary { cursor: pointer; padding: 1.05rem 0; font-weight: 650; }
   summary::marker { color: var(--accent); }
@@ -393,24 +360,21 @@
   @media (max-width: 940px) {
     .nav-links { display: none; }
     .hero-copy { max-width: 48rem; }
-    .hero-shot { width: min(100%, 46rem); margin-inline: auto; }
-    .install-grid { grid-template-columns: 1fr 1fr; }
-    .value-grid { grid-template-columns: 1fr; }
-    .value-card { min-height: 13rem; }
+    .hero-shot { width: min(100%, 44rem); }
+    .feature { grid-template-columns: minmax(0, 1fr); gap: 1.8rem; }
+    .feature--flip .feature-copy { order: 0; }
   }
 
   @media (max-width: 700px) {
     .brand span { display: none; }
     .theme-button span { display: none !important; }
-    .preview-head, .privacy-grid, .install-grid, .footer-grid { grid-template-columns: 1fr; }
-    .preview-tabs { width: 100%; overflow-x: auto; }
-    .preview-tabs button { flex: 1 0 auto; }
+    .privacy-grid, .install-grid, .footer-grid { grid-template-columns: 1fr; }
     .trust-grid { grid-template-columns: 1fr 1fr; }
     .trust-item:nth-child(2) { border-right: 0; }
     .trust-item:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-    .window-shell { border-radius: var(--radius-sm); }
-    .quota-card-shell { border-radius: 0; }
-    .window-bar { height: 1.7rem; }
+    .feature { border-radius: var(--radius); }
+    .shot-stage { border-radius: var(--radius); }
+    .term pre { font-size: 0.72rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -428,10 +392,9 @@
       <span>Agent Usage Widget</span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="#product"><span lang="zh-Hant">產品</span><span lang="en">Product</span></a>
+      <a href="#features"><span lang="zh-Hant">功能</span><span lang="en">Features</span></a>
       <a href="#privacy"><span lang="zh-Hant">隱私</span><span lang="en">Privacy</span></a>
-      <a href="#install"><span lang="zh-Hant">安裝</span><span lang="en">Install</span></a>
-      <a href="#iphone">iPhone</a>
+      <a href="#install"><span lang="zh-Hant">下載</span><span lang="en">Download</span></a>
       <a href="https://github.com/estellacoding/agent-usage-widget-releases/releases"><span lang="zh-Hant">更新紀錄</span><span lang="en">Changelog</span></a>
     </nav>
     <div class="nav-actions">
@@ -450,29 +413,29 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">macOS native · free · apple silicon</p>
+        <p class="eyebrow"><span lang="zh-Hant">macOS 原生 · 免費 · Apple Silicon</span><span lang="en">macOS native · free · Apple Silicon</span></p>
         <h1>
           <span lang="zh-Hant">在額度中斷工作前，<strong>先看見。</strong></span>
           <span lang="en">See the limit <strong>before it interrupts you.</strong></span>
         </h1>
         <p class="hero-lede">
-          <span lang="zh-Hant">把 Claude 與 Codex 的剩餘額度與重置時間，放在安靜、可點擊的 macOS 原生卡片裡。</span>
-          <span lang="en">Keep remaining Claude and Codex quota and reset timing in quiet, clickable native macOS cards.</span>
+          <span lang="zh-Hant">Claude 與 Codex 還剩多少、什麼時候重置，安靜地留在 macOS 桌面上。</span>
+          <span lang="en">How much Claude and Codex quota is left, and when it resets — quietly, on your macOS desktop.</span>
         </p>
         <div class="actions">
-          <a class="button button--primary" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.2-arm64.dmg">
-            <span lang="zh-Hant">下載 0.2.2 .dmg</span><span lang="en">Download 0.2.2 .dmg</span>
+          <a class="button button--primary" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.3-arm64.dmg">
+            <span lang="zh-Hant">下載 macOS 版 0.2.3</span><span lang="en">Download 0.2.3 for macOS</span>
           </a>
-          <a class="button" href="#iphone"><span lang="zh-Hant">iPhone App 下一步</span><span lang="en">iPhone app is next</span></a>
         </div>
         <div class="hero-meta" aria-label="System requirements">
-          <span>macOS 13+</span><span>Apple Silicon</span>
+          <span lang="zh-Hant">macOS 13 以上</span><span lang="en">macOS 13+</span>
+          <span>Apple Silicon</span>
           <span lang="zh-Hant">Developer ID 簽章 · Apple 已公證</span><span lang="en">Developer ID signed · Apple notarized</span>
         </div>
       </div>
 
       <figure class="hero-shot">
-        <div class="window-shell quota-card-shell">
+        <div class="shot-stage">
           <img lang="zh-Hant" src="assets/quota-cards-zh.png" width="712" height="352" alt="Agent Usage Widget 的 Codex 與 Claude 剩餘額度卡片">
           <img lang="en" src="assets/quota-cards-en.png" width="712" height="352" alt="Agent Usage Widget Codex and Claude remaining-quota cards">
         </div>
@@ -489,98 +452,134 @@
       <div class="trust-item"><strong><span lang="zh-Hant">原生 macOS</span><span lang="en">Native macOS</span></strong><span>Swift · AppKit</span></div>
       <div class="trust-item"><strong><span lang="zh-Hant">本機優先</span><span lang="en">Local-first</span></strong><span lang="zh-Hant">沒有遠端後台</span><span lang="en">No remote backend</span></div>
       <div class="trust-item"><strong><span lang="zh-Hant">不用新帳號</span><span lang="en">No new account</span></strong><span lang="zh-Hant">沿用既有登入</span><span lang="en">Uses existing sign-ins</span></div>
-      <div class="trust-item"><strong><span lang="zh-Hant">可完整移除</span><span lang="en">Fully removable</span></strong><span lang="zh-Hant">App、skill 與快取</span><span lang="en">App, skill, and cache</span></div>
+      <div class="trust-item"><strong><span lang="zh-Hant">可完整移除</span><span lang="en">Fully removable</span></strong><span lang="zh-Hant">App、Skill 與快取</span><span lang="en">App, Skill, and cache</span></div>
     </div>
   </aside>
 
-  <section class="section" id="product">
+  <section class="section" id="features">
     <div class="wrap">
-      <div class="preview-head">
-        <div class="stack reading">
-          <p class="eyebrow"><span lang="zh-Hant">真實產品畫面</span><span lang="en">The real product</span></p>
-          <h2><span lang="zh-Hant">一眼看額度，點一下看完整週期。</span><span lang="en">Glance at quota. Click for every window.</span></h2>
-          <p class="section-lede">
-            <span lang="zh-Hant">桌面卡只保留剩餘量與重置倒數；點擊任一卡片，即可在卡片下方查看 5 小時、每週及模型限定週額度。</span>
-            <span lang="en">Desktop cards keep remaining quota and reset countdowns in view. Click either card to open 5-hour, weekly, and model-scoped weekly details directly below.</span>
-          </p>
-        </div>
-        <div class="preview-tabs" role="tablist" aria-label="Product screenshots">
-          <button id="preview-cards" type="button" role="tab" data-preview="cards" aria-controls="product-preview" aria-selected="true" tabindex="0"><span lang="zh-Hant">額度卡</span><span lang="en">Quota cards</span></button>
-          <button id="preview-details" type="button" role="tab" data-preview="details" aria-controls="product-preview" aria-selected="false" tabindex="-1"><span lang="zh-Hant">詳細額度</span><span lang="en">Quota details</span></button>
-        </div>
-      </div>
-
-      <div class="product-stage" id="product-preview" role="tabpanel" aria-labelledby="preview-cards" aria-live="polite">
-        <div class="window-shell">
-          <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i></div>
-          <img lang="zh-Hant" data-preview-shot="cards" src="assets/quota-cards-zh.png" width="712" height="352" alt="繁中 Codex 與 Claude 剩餘額度卡片，使用固定範例資料">
-          <img lang="zh-Hant" data-preview-shot="details" src="assets/quota-details-zh.png" width="660" height="560" alt="繁中 Claude 詳細額度，包含每週 Fable 額度" hidden>
-          <img lang="en" data-preview-shot="cards" src="assets/quota-cards-en.png" width="712" height="352" alt="English Codex and Claude remaining-quota cards using fixed sample data">
-          <img lang="en" data-preview-shot="details" src="assets/quota-details-en.png" width="660" height="560" alt="English Claude quota details including the Fable weekly limit" hidden>
-        </div>
-        <p class="product-caption">
-          <span lang="zh-Hant">所有畫面均由正式 AppKit 額度元件與固定合成資料產生，不含私人紀錄。</span>
-          <span lang="en">Every screen is rendered by the production AppKit quota views with fixed synthetic data and no private records.</span>
+      <div class="section-head">
+        <p class="eyebrow"><span lang="zh-Hant">產品功能</span><span lang="en">Features</span></p>
+        <h2><span lang="zh-Hant">一眼看額度，需要時才展開。</span><span lang="en">Glance at your quota. Open it only when you need to.</span></h2>
+        <p class="section-lede reading">
+          <span lang="zh-Hant">桌面上只留剩餘量與重置倒數。需要完整週期時，點開卡片；需要在對話裡問，就用 Agent Skill。</span>
+          <span lang="en">The desktop keeps only what remains and when it resets. Click a card for every window, or ask inside your agent with the Skill.</span>
         </p>
       </div>
 
-      <div class="value-grid">
-        <article class="value-card">
-          <span class="value-number">01 / QUOTA</span>
-          <div class="stack stack--tight"><h3><span lang="zh-Hant">先知道還剩多少</span><span lang="en">Know what remains</span></h3><p><span lang="zh-Hant">Claude 與 Codex 各視窗都使用同一語意：大數字與進度軌代表剩餘，不把「無限制」畫成錯誤。</span><span lang="en">Every Claude and Codex window uses one meaning: the number and track show what remains, and no-limit plans never look like failures.</span></p></div>
+      <div class="features">
+        <article class="feature">
+          <div class="feature-copy">
+            <p class="feature-index"><span lang="zh-Hant">01 / 桌面額度卡</span><span lang="en">01 / DESKTOP CARDS</span></p>
+            <h3><span lang="zh-Hant">剩餘與重置，一直都在。</span><span lang="en">What remains, always in view.</span></h3>
+            <p><span lang="zh-Hant">常駐在桌面左上角，位於一般視窗下方。不搶焦點，也不佔 Dock 或選單列。</span><span lang="en">It sits in the top-left of your desktop, below normal windows. It never steals focus and never takes a Dock or menu-bar slot.</span></p>
+            <ul class="bullets">
+              <li><span lang="zh-Hant">大數字與進度軌一律是剩餘，不會一半已用、一半剩餘。</span><span lang="en">The number and the track always mean remaining — never a mix of used and remaining.</span></li>
+              <li><span lang="zh-Hant">服務名稱旁標明即時、快取、過期或無資料。</span><span lang="en">Each service is labelled live, cached, stale, or unavailable.</span></li>
+              <li><span lang="zh-Hant">每 60 秒自動更新，也可以隨時手動刷新。</span><span lang="en">It refreshes every 60 seconds, and you can refresh by hand at any time.</span></li>
+              <li><span lang="zh-Hant">方案沒有 5 小時上限時顯示「無此限制」，不當成錯誤。</span><span lang="en">Plans with no 5-hour limit read “No limit” instead of looking like a failure.</span></li>
+            </ul>
+          </div>
+          <div class="feature-art">
+            <img lang="zh-Hant" src="assets/quota-cards-zh.png" width="712" height="352" alt="繁中 Codex 與 Claude 剩餘額度卡片，使用固定範例資料">
+            <img lang="en" src="assets/quota-cards-en.png" width="712" height="352" alt="English Codex and Claude remaining-quota cards using fixed sample data">
+          </div>
         </article>
-        <article class="value-card">
-          <span class="value-number">02 / DETAILS</span>
-          <div class="stack stack--tight"><h3><span lang="zh-Hant">點擊後就在卡片下方展開</span><span lang="en">Details open below the cards</span></h3><p><span lang="zh-Hant">不用離開桌面位置即可查看 5 小時、每週與 Claude 模型限定週額度，標題列也保留標準 macOS 間距。</span><span lang="en">See 5-hour, weekly, and Claude model-scoped weekly quota without losing context, with standard macOS title-bar spacing.</span></p></div>
+
+        <article class="feature feature--flip">
+          <div class="feature-copy">
+            <p class="feature-index"><span lang="zh-Hant">02 / 額度明細</span><span lang="en">02 / QUOTA DETAILS</span></p>
+            <h3><span lang="zh-Hant">點一下，每個週期都說清楚。</span><span lang="en">One click, every window spelled out.</span></h3>
+            <p><span lang="zh-Hant">點任一張卡，明細就開在卡片正下方，不必到別的地方找。</span><span lang="en">Click either card and the details open directly below it — nowhere else to look.</span></p>
+            <ul class="bullets">
+              <li><span lang="zh-Hant">5 小時、1 週，以及 Claude 模型限定的每週額度。</span><span lang="en">The 5-hour window, the weekly window, and Claude’s model-scoped weekly limit.</span></li>
+              <li><span lang="zh-Hant">每個數字都標明自己屬於哪個週期。</span><span lang="en">Every number names the window it belongs to.</span></li>
+              <li><span lang="zh-Hant">Codex 沒有 5 小時上限時，主卡改顯示每週額度。</span><span lang="en">When Codex has no 5-hour limit, its main card shows the weekly window instead.</span></li>
+            </ul>
+          </div>
+          <div class="feature-art">
+            <img lang="zh-Hant" src="assets/quota-details-zh.png" width="700" height="624" alt="繁中 Claude 詳細額度，包含每週模型限定額度">
+            <img lang="en" src="assets/quota-details-en.png" width="700" height="624" alt="English Claude quota details including the model-scoped weekly limit">
+          </div>
         </article>
-        <article class="value-card">
-          <span class="value-number">03 / WINDOWS</span>
-          <div class="stack stack--tight"><h3><span lang="zh-Hant">每個數字都說清楚週期</span><span lang="en">Every number names its window</span></h3><p><span lang="zh-Hant">Claude 的 Fable 額度明確標示為每週；Codex 沒有 5 小時上限時，主卡直接改顯示每週額度。</span><span lang="en">Claude identifies Fable as weekly. When Codex has no 5-hour limit, its main card shows weekly quota instead.</span></p></div>
+
+        <article class="feature">
+          <div class="feature-copy">
+            <p class="feature-index"><span lang="zh-Hant">03 / Agent Skill</span><span lang="en">03 / AGENT SKILL</span></p>
+            <h3><span lang="zh-Hant">直接在 Claude Code 裡問。</span><span lang="en">Just ask inside Claude Code.</span></h3>
+            <p><span lang="zh-Hant">隨附的 Agent Skill，從桌面卡右鍵選單一鍵裝進 Claude Code 與 Codex。</span><span lang="en">The bundled Agent Skill installs into Claude Code and Codex in one click, from the card’s context menu.</span></p>
+            <ul class="bullets">
+              <li><span lang="zh-Hant">輸入 <code>/agent-usage-widget</code>，直接回報剩餘百分比與回復 100% 的時間。</span><span lang="en">Type <code>/agent-usage-widget</code> for the remaining percentages and when they return to 100%.</span></li>
+              <li><span lang="zh-Hant">額度偏低時，請 agent 在目前專案留下可接續的 checkpoint。</span><span lang="en">When quota runs low, ask the agent to leave a resumable checkpoint in the current project.</span></li>
+              <li><span lang="zh-Hant">預設讀本機快取，不會為了一次查詢就跳出 Keychain 提示。</span><span lang="en">It reads the local cache by default, so a single query never triggers a Keychain prompt.</span></li>
+            </ul>
+          </div>
+          <div class="feature-art feature-art--plain">
+            <div class="term">
+              <pre lang="zh-Hant"><b>&gt; /agent-usage-widget</b>
+
+Claude　剩餘 62%　5 小時視窗 · 03:41 後重置
+Codex 　剩餘 88%　每週視窗 · 4 天後重置
+
+資料來源：本機 widget 快取 · 2 分鐘前</pre>
+              <pre lang="en"><b>&gt; /agent-usage-widget</b>
+
+Claude   62% left   5-hour window · resets in 03:41
+Codex    88% left   weekly window · resets in 4 days
+
+Source: local widget cache · 2 minutes ago</pre>
+            </div>
+            <p class="term-caption"><span lang="zh-Hant">示意輸出；實際數字來自你自己的 Mac。</span><span lang="en">Illustrative output; the real numbers come from your own Mac.</span></p>
+          </div>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="section" id="privacy">
+  <section class="section section--soft" id="privacy">
     <div class="wrap">
-      <div class="stack reading">
-        <p class="eyebrow"><span lang="zh-Hant">隱私與信任</span><span lang="en">Privacy and trust</span></p>
-        <h2><span lang="zh-Hant">沒有產品帳號，沒有遙測，也沒有遠端後台。</span><span lang="en">No product account, no telemetry, no remote backend.</span></h2>
-        <p class="section-lede"><span lang="zh-Hant">Live 額度仍會連到 Claude／OpenAI 自己的 usage endpoint，因此這不是「完全離線」；安全邊界在於登入材料不離開 native bridge。</span><span lang="en">Live quota still connects to Claude and OpenAI usage endpoints, so this is not fully offline. The security boundary is that login material never leaves the native bridge.</span></p>
+      <div class="section-head">
+        <p class="eyebrow"><span lang="zh-Hant">隱私</span><span lang="en">Privacy</span></p>
+        <h2><span lang="zh-Hant">沒有產品帳號，沒有遙測，沒有遠端後台。</span><span lang="en">No product account, no telemetry, no remote backend.</span></h2>
+        <p class="section-lede reading"><span lang="zh-Hant">即時額度仍會連到 Claude 與 OpenAI 自己的端點，所以這不是完全離線。真正的邊界是：登入材料不離開原生橋接層。</span><span lang="en">Live quota still connects to Claude’s and OpenAI’s own endpoints, so this is not fully offline. The real boundary is that login material never leaves the native bridge.</span></p>
       </div>
       <div class="privacy-grid">
-        <article class="privacy-card"><h3><span lang="zh-Hant">會讀取與保存</span><span lang="en">Read and retained</span></h3><ul class="privacy-list"><li><span lang="zh-Hant">記憶體中的既有登入材料，用於各服務自己的 usage endpoint</span><span lang="en">Existing login material in memory, for each service's own usage endpoint</span></li><li><span lang="zh-Hant">各服務回傳的額度百分比、重置時間與模型標籤</span><span lang="en">Quota percentages, reset timing, and model labels returned by each service</span></li><li><span lang="zh-Hant">快取的非敏感百分比、狀態與時間戳</span><span lang="en">Cached non-sensitive percentages, status, and timestamps</span></li></ul></article>
-        <article class="privacy-card privacy-card--never"><h3><span lang="zh-Hant">絕不交給產品或第三方</span><span lang="en">Never sent to the product or third parties</span></h3><ul class="privacy-list"><li><span lang="zh-Hant">Claude cookie、Keychain secret、organization ID</span><span lang="en">Claude cookies, Keychain secrets, or organization IDs</span></li><li><span lang="zh-Hant">Codex OAuth token 或 account ID</span><span lang="en">Codex OAuth tokens or account IDs</span></li><li><span lang="zh-Hant">本機 session 內容、專案名稱或私人 screenshot</span><span lang="en">Local session content, project names, or private screenshots</span></li></ul></article>
+        <article class="privacy-card"><h3><span lang="zh-Hant">會讀取與保存</span><span lang="en">Read and retained</span></h3><ul class="privacy-list"><li><span lang="zh-Hant">記憶體中的既有登入材料，只用於各服務自己的用量端點</span><span lang="en">Existing login material in memory, only for each service’s own usage endpoint</span></li><li><span lang="zh-Hant">各服務回傳的額度百分比、重置時間與模型標籤</span><span lang="en">Quota percentages, reset timing, and model labels returned by each service</span></li><li><span lang="zh-Hant">快取的非敏感百分比、狀態與時間戳</span><span lang="en">Cached non-sensitive percentages, status, and timestamps</span></li></ul></article>
+        <article class="privacy-card privacy-card--never"><h3><span lang="zh-Hant">絕不交給產品或第三方</span><span lang="en">Never sent to the product or third parties</span></h3><ul class="privacy-list"><li><span lang="zh-Hant">Claude cookie、Keychain secret、organization ID</span><span lang="en">Claude cookies, Keychain secrets, or organization IDs</span></li><li><span lang="zh-Hant">Codex OAuth token 或 account ID</span><span lang="en">Codex OAuth tokens or account IDs</span></li><li><span lang="zh-Hant">本機 session 內容、專案名稱或私人畫面</span><span lang="en">Local session content, project names, or private screenshots</span></li></ul></article>
       </div>
-      <p class="privacy-note"><span lang="zh-Hant">Claude Keychain 存取可以獨立停用；Codex、Widget 與開機啟動控制仍可使用。</span><span lang="en">Claude Keychain access can be disabled independently while Codex, the Widget, and login-item controls keep working.</span></p>
+      <p class="privacy-note"><span lang="zh-Hant">Claude Keychain 存取可以單獨停用，Codex、桌面卡與開機啟動仍照常運作。</span><span lang="en">Claude Keychain access can be disabled on its own; Codex, the desktop cards, and launch at login keep working.</span></p>
     </div>
   </section>
 
-  <section class="section section--soft" id="install">
+  <section class="section" id="install">
     <div class="wrap">
-      <div class="stack reading">
-        <p class="eyebrow"><span lang="zh-Hant">安裝</span><span lang="en">Install</span></p>
-        <h2><span lang="zh-Hant">選擇拖曳安裝，或一次完成設定。</span><span lang="en">Drag it in, or complete setup in one pass.</span></h2>
-        <p class="section-lede"><span lang="zh-Hant">兩個安裝檔都是 0.2.2 arm64，內含經審查的 Node runtime；你的 Mac 不需要先裝 Node 或 Xcode。</span><span lang="en">Both 0.2.2 arm64 installers carry the reviewed Node runtime. Your Mac does not need Node or Xcode first.</span></p>
+      <div class="section-head">
+        <p class="eyebrow"><span lang="zh-Hant">下載</span><span lang="en">Download</span></p>
+        <h2><span lang="zh-Hant">拖進 Applications，或一次裝好。</span><span lang="en">Drag it in, or set it all up at once.</span></h2>
+        <p class="section-lede reading"><span lang="zh-Hant">兩個安裝檔都是 0.2.3 arm64，內含經審查的 Node runtime。你的 Mac 不需要先裝 Node 或 Xcode。</span><span lang="en">Both 0.2.3 arm64 installers carry the reviewed Node runtime. Your Mac needs neither Node nor Xcode first.</span></p>
       </div>
       <div class="install-grid">
-        <article class="installer installer--primary"><div class="stack stack--tight"><span class="installer-meta">DMG · 0.2.2 · ARM64</span><h3><span lang="zh-Hant">拖到 Applications</span><span lang="en">Drag to Applications</span></h3><p><span lang="zh-Hant">適合想自己決定何時啟用開機啟動與安裝 Agent Skill 的使用者。</span><span lang="en">Best when you want to choose when to enable launch at login and install the Agent Skill.</span></p></div><a class="button button--primary" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.2-arm64.dmg"><span lang="zh-Hant">下載 .dmg</span><span lang="en">Download .dmg</span></a></article>
-        <article class="installer"><div class="stack stack--tight"><span class="installer-meta">PKG · 0.2.2 · ARM64</span><h3><span lang="zh-Hant">一併完成本機設定</span><span lang="en">Complete local setup</span></h3><p><span lang="zh-Hant">安裝 App，並設定開機啟動與 Agent Skill；所有內容仍可完整移除。</span><span lang="en">Installs the app, configures launch at login, and adds the Agent Skill. Everything remains fully removable.</span></p></div><a class="button" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.2-arm64.pkg"><span lang="zh-Hant">下載 .pkg</span><span lang="en">Download .pkg</span></a></article>
-        <article class="installer installer--iphone" id="iphone"><div class="stack stack--tight"><span class="installer-meta">IPHONE · NEXT</span><h3><span lang="zh-Hant">iPhone App 是下一步</span><span lang="en">iPhone app is next</span></h3><p><span lang="zh-Hant">Mac 版完成後開始開發。App Store／TestFlight 連結通過驗證後，這裡會直接改成下載入口。</span><span lang="en">Development starts after the Mac release. This becomes the direct App Store or TestFlight download once a verified link exists.</span></p></div><span class="status-pill" role="status"><span lang="zh-Hant">尚未開放下載</span><span lang="en">Not yet available</span></span></article>
+        <article class="installer installer--primary"><div class="stack stack--tight"><span class="installer-meta">DMG · 0.2.3 · ARM64</span><h3><span lang="zh-Hant">拖到 Applications</span><span lang="en">Drag to Applications</span></h3><p><span lang="zh-Hant">自己決定何時啟用開機啟動、何時安裝 Agent Skill。</span><span lang="en">You decide when to enable launch at login and when to install the Agent Skill.</span></p></div><a class="button button--primary" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.3-arm64.dmg"><span lang="zh-Hant">下載 .dmg</span><span lang="en">Download .dmg</span></a></article>
+        <article class="installer"><div class="stack stack--tight"><span class="installer-meta">PKG · 0.2.3 · ARM64</span><h3><span lang="zh-Hant">一併完成設定</span><span lang="en">Set everything up</span></h3><p><span lang="zh-Hant">安裝 App、設定開機啟動、加入 Agent Skill，之後仍可完整移除。</span><span lang="en">Installs the app, sets up launch at login, and adds the Agent Skill. Still fully removable afterwards.</span></p></div><a class="button" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.3-arm64.pkg"><span lang="zh-Hant">下載 .pkg</span><span lang="en">Download .pkg</span></a></article>
       </div>
-      <aside class="gatekeeper"><h3><span lang="zh-Hant">第一次開啟：正常通過 Gatekeeper</span><span lang="en">First launch: verified by Gatekeeper</span></h3><p><span lang="zh-Hant">DMG 與 PKG 都使用 Developer ID 簽章，並已由 Apple 公證與附加票據；不需要繞過 macOS 安全性設定。</span><span lang="en">Both the DMG and PKG are Developer ID signed, Apple-notarized, and stapled. No macOS security bypass is required.</span></p><ol><li><span lang="zh-Hant">下載後照上方方式安裝並正常開啟 App。</span><span lang="en">Download, install using either option above, and open the app normally.</span></li><li><span lang="zh-Hant">macOS 會用 Developer ID 與公證票據驗證完整性。</span><span lang="en">macOS verifies integrity using the Developer ID signature and notarization ticket.</span></li><li><span lang="zh-Hant">若系統仍顯示無法驗證或檔案損壞，請勿繞過警告；重新下載並核對 release checksum。</span><span lang="en">If macOS still reports an unverifiable or damaged file, do not bypass the warning; re-download it and verify the release checksum.</span></li></ol></aside>
-
+      <aside class="gatekeeper">
+        <h3><span lang="zh-Hant">第一次開啟就能通過 Gatekeeper</span><span lang="en">It passes Gatekeeper on first launch</span></h3>
+        <p><span lang="zh-Hant">DMG 與 PKG 都使用 Developer ID 簽章，並已由 Apple 公證與附加票據，不需要繞過 macOS 安全性設定。若系統仍顯示無法驗證或檔案損壞，請不要繞過警告，重新下載並核對 release checksum。</span><span lang="en">Both the DMG and the PKG are Developer ID signed, Apple notarized, and stapled, so no macOS security bypass is needed. If macOS still reports an unverifiable or damaged file, do not bypass the warning — re-download it and verify the release checksum.</span></p>
+      </aside>
     </div>
   </section>
 
-  <section class="section" id="faq">
+  <section class="section section--soft" id="faq">
     <div class="wrap">
-      <div class="stack reading"><p class="eyebrow">FAQ</p><h2><span lang="zh-Hant">重要邊界，先說清楚。</span><span lang="en">Clear boundaries before you install.</span></h2></div>
+      <div class="section-head">
+        <p class="eyebrow"><span lang="zh-Hant">重要邊界</span><span lang="en">Boundaries</span></p>
+        <h2><span lang="zh-Hant">安裝前先說清楚。</span><span lang="en">Clear before you install.</span></h2>
+      </div>
       <div class="faq">
-        <details><summary><span lang="zh-Hant">這是 Anthropic 或 OpenAI 的官方工具嗎？</span><span lang="en">Is this an official Anthropic or OpenAI tool?</span></summary><p><span lang="zh-Hant">不是。這是非官方 best-effort 整合；端點、登入或服務調整都可能讓讀取失敗或與服務頁面不同，請以服務自己的頁面為準。</span><span lang="en">No. It is an unofficial, best-effort integration. Endpoint, login, or service changes can cause failures or differences; provider pages are authoritative.</span></p></details>
-        <details><summary><span lang="zh-Hant">「Live」代表官方保證準確嗎？</span><span lang="en">Does “Live” mean officially guaranteed accuracy?</span></summary><p><span lang="zh-Hant">不代表。Live 只表示最近一次對該服務 endpoint 的請求成功；Cached 與 Stale 會顯示資料年齡，Unavailable 會說明缺少登入、權限或服務錯誤。</span><span lang="en">No. Live only means the latest request to that service endpoint succeeded. Cached and Stale show age; Unavailable explains missing sign-in, permission, or service failure.</span></p></details>
-        <details><summary><span lang="zh-Hant">為什麼會跳出 Claude Safe Storage 提示？</span><span lang="en">Why does Claude Safe Storage prompt appear?</span></summary><p><span lang="zh-Hant">Claude live 額度需要使用 Claude Desktop 的現有 session。「允許」只授權一次；「永遠允許」避免每分鐘刷新重複詢問。也可以獨立停用 Claude Keychain 存取。</span><span lang="en">Claude live quota uses the existing Claude Desktop session. Allow grants one access; Always Allow avoids repeat prompts during minute refreshes. Claude Keychain access can also be disabled independently.</span></p></details>
-        <details><summary><span lang="zh-Hant">怎麼完整移除？</span><span lang="en">How do I remove everything?</span></summary><p><span lang="zh-Hant">在 Widget 右鍵選單停用開機啟動並結束，移除 Applications 裡的 App，再移除本機 skill 與非敏感快取。PKG 安裝也可忘記 receipt。</span><span lang="en">Disable launch at login and quit from the Widget menu, remove the app from Applications, then remove the local skill and non-sensitive cache. A PKG receipt can also be forgotten.</span></p></details>
+        <details><summary><span lang="zh-Hant">這是 Anthropic 或 OpenAI 的官方工具嗎？</span><span lang="en">Is this an official Anthropic or OpenAI tool?</span></summary><p><span lang="zh-Hant">不是。這是非官方的 best-effort 整合；端點、登入或服務調整都可能讓讀取失敗或與服務頁面不同，請以服務自己的頁面為準。</span><span lang="en">No. It is an unofficial, best-effort integration. Endpoint, login, or service changes can cause failures or differences; the provider’s own pages are authoritative.</span></p></details>
+        <details><summary><span lang="zh-Hant">「即時」代表官方保證準確嗎？</span><span lang="en">Does “live” mean officially guaranteed accuracy?</span></summary><p><span lang="zh-Hant">不代表。即時只表示最近一次對該服務端點的請求成功；快取與過期會顯示資料年齡，無資料會說明缺少登入、權限或服務錯誤。</span><span lang="en">No. Live only means the latest request to that service endpoint succeeded. Cached and stale show the data’s age, and unavailable explains a missing sign-in, a denied permission, or a service failure.</span></p></details>
+        <details><summary><span lang="zh-Hant">為什麼會跳出 Claude Safe Storage 提示？</span><span lang="en">Why does the Claude Safe Storage prompt appear?</span></summary><p><span lang="zh-Hant">Claude 的即時額度需要沿用 Claude Desktop 的既有 session。「允許」只授權一次，「永遠允許」可避免每分鐘刷新重複詢問；也可以單獨停用 Claude Keychain 存取。</span><span lang="en">Claude’s live quota reuses the existing Claude Desktop session. Allow grants one access; Always Allow avoids a repeat prompt on every minute’s refresh. You can also disable Claude Keychain access on its own.</span></p></details>
+        <details><summary><span lang="zh-Hant">怎麼完整移除？</span><span lang="en">How do I remove everything?</span></summary><p><span lang="zh-Hant">在桌面卡右鍵選單停用開機啟動並結束，移除 Applications 裡的 App，再移除本機 Skill 與非敏感快取。用 PKG 安裝的話也可以一併忘記 receipt。</span><span lang="en">From the card’s context menu, disable launch at login and quit, remove the app from Applications, then remove the local Skill and the non-sensitive cache. A PKG install can also have its receipt forgotten.</span></p></details>
       </div>
     </div>
   </section>
@@ -588,8 +587,8 @@
 
 <footer>
   <div class="wrap footer-grid">
-    <div class="stack stack--tight"><strong>Agent Usage Widget 0.2.2</strong><p class="footer-copy"><span lang="zh-Hant">macOS 13+ · Apple Silicon · Developer ID 簽章、Apple 已公證。非 Anthropic、OpenAI 或 GitHub 官方工具，也與三者無關。額度數字僅供參考。</span><span lang="en">macOS 13+ · Apple Silicon · Developer ID signed and Apple-notarized. Not an official Anthropic, OpenAI, or GitHub tool and not affiliated with them. Quota values are informational.</span></p></div>
-    <div class="footer-links"><a href="#product"><span lang="zh-Hant">產品</span><span lang="en">Product</span></a><a href="#privacy"><span lang="zh-Hant">隱私</span><span lang="en">Privacy</span></a><a href="#install"><span lang="zh-Hant">Mac 下載</span><span lang="en">Mac download</span></a><a href="#iphone">iPhone</a><a href="https://github.com/estellacoding/agent-usage-widget-releases/releases"><span lang="zh-Hant">版本紀錄</span><span lang="en">Releases</span></a></div>
+    <div class="stack stack--tight"><strong>Agent Usage Widget 0.2.3</strong><p class="footer-copy"><span lang="zh-Hant">macOS 13 以上 · Apple Silicon · Developer ID 簽章、Apple 已公證。非 Anthropic、OpenAI 或 GitHub 官方工具，也與三者無關。額度數字僅供參考。</span><span lang="en">macOS 13+ · Apple Silicon · Developer ID signed and Apple notarized. Not an official Anthropic, OpenAI, or GitHub tool and not affiliated with them. Quota values are informational.</span></p></div>
+    <div class="footer-links"><a href="#features"><span lang="zh-Hant">功能</span><span lang="en">Features</span></a><a href="#privacy"><span lang="zh-Hant">隱私</span><span lang="en">Privacy</span></a><a href="#install"><span lang="zh-Hant">下載</span><span lang="en">Download</span></a><a href="https://github.com/estellacoding/agent-usage-widget-releases/releases"><span lang="zh-Hant">版本紀錄</span><span lang="en">Releases</span></a></div>
   </div>
 </footer>
 
@@ -598,9 +597,6 @@
     var root = document.documentElement;
     var languageButtons = document.querySelectorAll("[data-set-lang]");
     var themeButton = document.querySelector("[data-toggle-theme]");
-    var previewButtons = document.querySelectorAll("[data-preview]");
-    var previewShots = document.querySelectorAll("[data-preview-shot]");
-    var previewPanel = document.querySelector("#product-preview");
 
     function applyLanguage(lang) {
       root.dataset.lang = lang;
@@ -622,31 +618,6 @@
     });
     themeButton.addEventListener("click", function () {
       applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
-    });
-    function selectPreview(button, moveFocus) {
-      var selected = button.dataset.preview;
-      previewButtons.forEach(function (item) {
-        var isSelected = item === button;
-        item.setAttribute("aria-selected", String(isSelected));
-        item.tabIndex = isSelected ? 0 : -1;
-      });
-      previewShots.forEach(function (shot) { shot.hidden = shot.dataset.previewShot !== selected; });
-      previewPanel.setAttribute("aria-labelledby", button.id);
-      if (moveFocus) button.focus();
-    }
-
-    previewButtons.forEach(function (button, index) {
-      button.addEventListener("click", function () { selectPreview(button, false); });
-      button.addEventListener("keydown", function (event) {
-        var next = null;
-        if (event.key === "ArrowRight") next = (index + 1) % previewButtons.length;
-        if (event.key === "ArrowLeft") next = (index - 1 + previewButtons.length) % previewButtons.length;
-        if (event.key === "Home") next = 0;
-        if (event.key === "End") next = previewButtons.length - 1;
-        if (next == null) return;
-        event.preventDefault();
-        selectPreview(previewButtons[next], true);
-      });
     });
 
     applyLanguage(root.dataset.lang === "en" ? "en" : "zh");
