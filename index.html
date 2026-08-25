@@ -462,8 +462,8 @@
         <p class="eyebrow"><span lang="zh-Hant">產品功能</span><span lang="en">Features</span></p>
         <h2><span lang="zh-Hant">一眼看額度，需要時才展開。</span><span lang="en">Glance at your quota. Open it only when you need to.</span></h2>
         <p class="section-lede reading">
-          <span lang="zh-Hant">桌面上只留剩餘量與重置倒數。需要完整週期時，點開卡片；需要在對話裡問，就用 Agent Skill。</span>
-          <span lang="en">The desktop keeps only what remains and when it resets. Click a card for every window, or ask inside your agent with the Skill.</span>
+          <span lang="zh-Hant">桌面上只留剩餘量與重置倒數。需要完整週期或想知道用量花在哪裡時，點開卡片；需要在對話裡問，就用 Agent Skill。</span>
+          <span lang="en">The desktop keeps only what remains and when it resets. Click a card for every window and for where your usage went, or ask inside your agent with the Skill.</span>
         </p>
       </div>
 
@@ -505,9 +505,27 @@
 
         <article class="feature">
           <div class="feature-copy">
-            <p class="feature-index"><span lang="zh-Hant">03 / Agent Skill</span><span lang="en">03 / AGENT SKILL</span></p>
+            <p class="feature-index"><span lang="zh-Hant">03 / 活動分析</span><span lang="en">03 / ACTIVITY ANALYSIS</span></p>
+            <h3><span lang="zh-Hant">這週的用量花在哪裡。</span><span lang="en">Where this week actually went.</span></h3>
+            <p><span lang="zh-Hant">主視窗的活動分析頁，讀本機 Claude Code 與 Codex CLI 的記錄，說明近 7 天的活動落在哪些專案、模型與工具上。</span><span lang="en">The activity tab reads your local Claude Code and Codex CLI records and shows which projects, models and tools the last seven days went to.</span></p>
+            <ul class="bullets">
+              <li><span lang="zh-Hant">Claude 與 Codex 各一張卡，分母完全分開，不把兩套額度系統混成一個百分比。</span><span lang="en">Claude and Codex get their own card and their own denominator — two quota systems never share one percentage.</span></li>
+              <li><span lang="zh-Hant">只列前三名，其餘彙總成「其他 N 個」，比例仍然加得回 100%。</span><span lang="en">Only the top three are listed; the rest roll into “N others”, so the shares still add up.</span></li>
+              <li><span lang="zh-Hant">Codex 的本機記錄沒有主線／子任務與工具內容，就顯示沒有資料，不補 0%。</span><span lang="en">Codex records carry no lane or tool data, so those read as no data instead of a fabricated 0%.</span></li>
+              <li><span lang="zh-Hant">頁首固定說明：這裡的比例不能拿來算額度，剩餘量以官方數字為準。</span><span lang="en">A fixed notice says it plainly: these shares are not quota. Remaining quota is the official number.</span></li>
+            </ul>
+          </div>
+          <div class="feature-art">
+            <img lang="zh-Hant" src="assets/activity-zh.png" width="720" height="790" alt="繁中活動分析頁，Claude 卡列出專案、模型、主線與子任務、工具占比，使用固定範例資料">
+            <img lang="en" src="assets/activity-en.png" width="720" height="790" alt="English activity analysis showing the Claude card with project, model, lane and tool shares from fixed sample data">
+          </div>
+        </article>
+
+        <article class="feature feature--flip">
+          <div class="feature-copy">
+            <p class="feature-index"><span lang="zh-Hant">04 / Agent Skill</span><span lang="en">04 / AGENT SKILL</span></p>
             <h3><span lang="zh-Hant">直接在 Claude Code 裡問。</span><span lang="en">Just ask inside Claude Code.</span></h3>
-            <p><span lang="zh-Hant">隨附的 Agent Skill，從桌面卡右鍵選單一鍵裝進 Claude Code 與 Codex。</span><span lang="en">The bundled Agent Skill installs into Claude Code and Codex in one click, from the card’s context menu.</span></p>
+            <p><span lang="zh-Hant">隨附的 Agent Skill，從主視窗的設定頁一鍵裝進 Claude Code 與 Codex。</span><span lang="en">The bundled Agent Skill installs into Claude Code and Codex in one click, from the Settings tab.</span></p>
             <ul class="bullets">
               <li><span lang="zh-Hant">輸入 <code>/agent-usage-widget</code>，直接回報剩餘百分比與回復 100% 的時間。</span><span lang="en">Type <code>/agent-usage-widget</code> for the remaining percentages and when they return to 100%.</span></li>
               <li><span lang="zh-Hant">額度偏低時，請 agent 在目前專案留下可接續的 checkpoint。</span><span lang="en">When quota runs low, ask the agent to leave a resumable checkpoint in the current project.</span></li>
