@@ -2,18 +2,18 @@
 <html lang="zh-Hant" data-lang="zh" data-theme="light">
 <head>
 <meta charset="utf-8">
-<title>Agent Usage Widget — 在額度中斷前先看見</title>
+<title>Agent Usage Widget — Claude、Codex 本機額度一眼就知道</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="A native macOS widget for seeing remaining Claude and Codex quota and reset timing before an interruption.">
+<meta name="description" content="在 macOS 桌面查看 Claude 與 Codex 的剩餘額度、重置倒數和更新狀態。免費、原生、不需另外註冊。">
 <meta property="og:title" content="Agent Usage Widget">
-<meta property="og:description" content="See remaining Claude and Codex quota and reset timing before an interruption.">
+<meta property="og:description" content="在 macOS 桌面查看 Claude 與 Codex 的剩餘額度、重置倒數和資料狀態。">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://estellacoding.github.io/agent-usage-widget-releases/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Agent Usage Widget">
-<meta name="twitter:description" content="See remaining Claude and Codex quota before an interruption.">
+<meta name="twitter:description" content="Claude、Codex 還剩多少額度，Mac 桌面一眼就知道。">
 <meta name="twitter:image" content="https://estellacoding.github.io/agent-usage-widget-releases/assets/og.png">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <meta name="color-scheme" content="light dark">
@@ -214,6 +214,7 @@
     text-align: center;
   }
   .hero-copy h1 strong { color: var(--accent-strong); font-weight: inherit; }
+  .hero-question { white-space: nowrap; }
   .hero-lede { color: var(--muted); font-size: clamp(1.08rem, 1rem + 0.4vw, 1.32rem); max-width: 46rem; }
   .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: center; }
   .button {
@@ -368,6 +369,7 @@
   @media (max-width: 700px) {
     .brand span { display: none; }
     .theme-button span { display: none !important; }
+    .hero-copy h1 { font-size: clamp(1.9rem, 9.1vw, 2.35rem); }
     .privacy-grid, .install-grid, .footer-grid { grid-template-columns: 1fr; }
     .trust-grid { grid-template-columns: 1fr 1fr; }
     .trust-item:nth-child(2) { border-right: 0; }
@@ -413,24 +415,24 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow"><span lang="zh-Hant">macOS 原生 · 免費 · Apple Silicon</span><span lang="en">macOS native · free · Apple Silicon</span></p>
+        <p class="eyebrow"><span lang="zh-Hant">macOS 桌面小工具 · 免費 · Apple Silicon</span><span lang="en">macOS native · free · Apple Silicon</span></p>
         <h1>
-          <span lang="zh-Hant">在額度中斷工作前，<strong>先看見。</strong></span>
+          <span lang="zh-Hant"><span>Claude、Codex</span> <span class="hero-question">本機額度還剩多少？</span><strong>一眼就知道。</strong></span>
           <span lang="en">See the limit <strong>before it interrupts you.</strong></span>
         </h1>
         <p class="hero-lede">
-          <span lang="zh-Hant">Claude 與 Codex 還剩多少、什麼時候重置，安靜地留在 macOS 桌面上。</span>
+          <span lang="zh-Hant">剩餘百分比、重置倒數和資料狀態，常駐在 Mac 桌面上。</span>
           <span lang="en">How much Claude and Codex quota is left, and when it resets — quietly, on your macOS desktop.</span>
         </p>
         <div class="actions">
           <a class="button button--primary" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.5-arm64.dmg">
-            <span lang="zh-Hant">下載 macOS 版 0.2.5</span><span lang="en">Download 0.2.5 for macOS</span>
+            <span lang="zh-Hant">免費下載 macOS 版</span><span lang="en">Download 0.2.5 for macOS</span>
           </a>
         </div>
         <div class="hero-meta" aria-label="System requirements">
           <span lang="zh-Hant">macOS 13 以上</span><span lang="en">macOS 13+</span>
           <span>Apple Silicon</span>
-          <span lang="zh-Hant">Developer ID 簽章 · Apple 已公證</span><span lang="en">Developer ID signed · Apple notarized</span>
+          <span lang="zh-Hant">Apple 已公證</span><span lang="en">Developer ID signed · Apple notarized</span>
         </div>
       </div>
 
@@ -440,7 +442,7 @@
           <img lang="en" src="assets/quota-cards-en.png" width="712" height="352" alt="Agent Usage Widget Codex and Claude remaining-quota cards">
         </div>
         <figcaption class="shot-caption">
-          <span lang="zh-Hant">正式 AppKit 畫面 · 固定範例資料，不含私人紀錄</span>
+          <span lang="zh-Hant">實際 App 畫面 · 圖中為範例資料</span>
           <span lang="en">Production AppKit UI · fixed sample data, no private records</span>
         </figcaption>
       </figure>
@@ -450,8 +452,8 @@
   <aside class="trust-strip" aria-label="Product trust signals">
     <div class="wrap trust-grid">
       <div class="trust-item"><strong><span lang="zh-Hant">原生 macOS</span><span lang="en">Native macOS</span></strong><span>Swift · AppKit</span></div>
-      <div class="trust-item"><strong><span lang="zh-Hant">本機優先</span><span lang="en">Local-first</span></strong><span lang="zh-Hant">沒有遠端後台</span><span lang="en">No remote backend</span></div>
-      <div class="trust-item"><strong><span lang="zh-Hant">不用新帳號</span><span lang="en">No new account</span></strong><span lang="zh-Hant">沿用既有登入</span><span lang="en">Uses existing sign-ins</span></div>
+      <div class="trust-item"><strong><span lang="zh-Hant">沒有第三方後台</span><span lang="en">Local-first</span></strong><span lang="zh-Hant">只連 Claude、OpenAI</span><span lang="en">No remote backend</span></div>
+      <div class="trust-item"><strong><span lang="zh-Hant">不用另外註冊</span><span lang="en">No new account</span></strong><span lang="zh-Hant">沿用 Claude、Codex 登入</span><span lang="en">Uses existing sign-ins</span></div>
       <div class="trust-item"><strong><span lang="zh-Hant">可完整移除</span><span lang="en">Fully removable</span></strong><span lang="zh-Hant">App、Skill 與快取</span><span lang="en">App, Skill, and cache</span></div>
     </div>
   </aside>
@@ -460,9 +462,9 @@
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow"><span lang="zh-Hant">產品功能</span><span lang="en">Features</span></p>
-        <h2><span lang="zh-Hant">一眼看額度，需要時才展開。</span><span lang="en">Glance at your quota. Open it only when you need to.</span></h2>
+        <h2><span lang="zh-Hant">先看還能用多少，再安排接下來的工作。</span><span lang="en">Glance at your quota. Open it only when you need to.</span></h2>
         <p class="section-lede reading">
-          <span lang="zh-Hant">桌面上只留剩餘量與重置倒數。需要完整週期或想知道用量花在哪裡時，點開卡片；需要在對話裡問，就用 Agent Skill。</span>
+          <span lang="zh-Hant">桌面卡片顯示剩餘額度和重置倒數；想看每個額度週期或近 7 天的使用分布，再打開詳細視窗。也能在 Claude Code 或 Codex 裡直接查詢。</span>
           <span lang="en">The desktop keeps only what remains and when it resets. Click a card for every window and for where your usage went, or ask inside your agent with the Skill.</span>
         </p>
       </div>
@@ -471,13 +473,13 @@
         <article class="feature">
           <div class="feature-copy">
             <p class="feature-index"><span lang="zh-Hant">01 / 桌面額度卡</span><span lang="en">01 / DESKTOP CARDS</span></p>
-            <h3><span lang="zh-Hant">剩餘與重置，一直都在。</span><span lang="en">What remains, always in view.</span></h3>
-            <p><span lang="zh-Hant">常駐在桌面左上角，位於一般視窗下方。不搶焦點，也不佔 Dock 或選單列。</span><span lang="en">It sits in the top-left of your desktop, below normal windows. It never steals focus and never takes a Dock or menu-bar slot.</span></p>
+            <h3><span lang="zh-Hant">不用切換畫面，剩餘額度隨時看得到。</span><span lang="en">What remains, always in view.</span></h3>
+            <p><span lang="zh-Hant">小工具固定在桌面左上角，平常會被一般視窗蓋住，不搶焦點，也不佔用 Dock 或選單列。</span><span lang="en">It sits in the top-left of your desktop, below normal windows. It never steals focus and never takes a Dock or menu-bar slot.</span></p>
             <ul class="bullets">
-              <li><span lang="zh-Hant">大數字與進度軌一律是剩餘，不會一半已用、一半剩餘。</span><span lang="en">The number and the track always mean remaining — never a mix of used and remaining.</span></li>
-              <li><span lang="zh-Hant">服務名稱旁標明即時、快取、過期或無資料。</span><span lang="en">Each service is labelled live, cached, stale, or unavailable.</span></li>
-              <li><span lang="zh-Hant">每 60 秒自動更新，也可以隨時手動刷新。</span><span lang="en">It refreshes every 60 seconds, and you can refresh by hand at any time.</span></li>
-              <li><span lang="zh-Hant">方案沒有 5 小時上限時顯示「無此限制」，不當成錯誤。</span><span lang="en">Plans with no 5-hour limit read “No limit” instead of looking like a failure.</span></li>
+              <li><span lang="zh-Hant">百分比和進度條都代表「還能用多少」，不會混用已使用與剩餘額度。</span><span lang="en">The number and the track always mean remaining — never a mix of used and remaining.</span></li>
+              <li><span lang="zh-Hant">清楚標示資料是剛更新、來自快取、已過期，或暫時無法取得。</span><span lang="en">Each service is labelled live, cached, stale, or unavailable.</span></li>
+              <li><span lang="zh-Hant">每 60 秒自動更新，也能隨時手動重新整理。</span><span lang="en">It refreshes every 60 seconds, and you can refresh by hand at any time.</span></li>
+              <li><span lang="zh-Hant">方案若沒有 5 小時上限，直接顯示「此方案無此限制」，不會誤報為錯誤。</span><span lang="en">Plans with no 5-hour limit read “No limit” instead of looking like a failure.</span></li>
             </ul>
           </div>
           <div class="feature-art">
@@ -489,12 +491,12 @@
         <article class="feature feature--flip">
           <div class="feature-copy">
             <p class="feature-index"><span lang="zh-Hant">02 / 額度明細</span><span lang="en">02 / QUOTA DETAILS</span></p>
-            <h3><span lang="zh-Hant">點一下，每個週期都說清楚。</span><span lang="en">One click, every window spelled out.</span></h3>
-            <p><span lang="zh-Hant">點任一張卡，主視窗直接開到額度頁，兩個服務的所有週期都在同一處。</span><span lang="en">Click either card and the main window opens to Quota, with every window for both services in one place.</span></p>
+            <h3><span lang="zh-Hant">每個額度週期，分開看清楚。</span><span lang="en">One click, every window spelled out.</span></h3>
+            <p><span lang="zh-Hant">點一下桌面卡片，就能在詳細視窗同時查看 Claude 和 Codex 的所有額度週期。</span><span lang="en">Click either card and the main window opens to Quota, with every window for both services in one place.</span></p>
             <ul class="bullets">
-              <li><span lang="zh-Hant">5 小時、1 週，以及 Claude 模型限定的每週額度。</span><span lang="en">The 5-hour window, the weekly window, and Claude’s model-scoped weekly limit.</span></li>
-              <li><span lang="zh-Hant">每個數字都標明自己屬於哪個週期。</span><span lang="en">Every number names the window it belongs to.</span></li>
-              <li><span lang="zh-Hant">Codex 沒有 5 小時上限時，主卡改顯示每週額度。</span><span lang="en">When Codex has no 5-hour limit, its main card shows the weekly window instead.</span></li>
+              <li><span lang="zh-Hant">包含 5 小時和每週額度；Claude 另顯示特定模型的每週額度。</span><span lang="en">The 5-hour window, the weekly window, and Claude’s model-scoped weekly limit.</span></li>
+              <li><span lang="zh-Hant">每個百分比都會標示對應週期與重置時間。</span><span lang="en">Every number names the window it belongs to.</span></li>
+              <li><span lang="zh-Hant">Codex 方案沒有 5 小時上限時，桌面卡片會改顯示每週剩餘額度。</span><span lang="en">When Codex has no 5-hour limit, its main card shows the weekly window instead.</span></li>
             </ul>
           </div>
           <div class="feature-art">
@@ -506,13 +508,13 @@
         <article class="feature">
           <div class="feature-copy">
             <p class="feature-index"><span lang="zh-Hant">03 / 活動分析</span><span lang="en">03 / ACTIVITY ANALYSIS</span></p>
-            <h3><span lang="zh-Hant">這週的用量花在哪裡。</span><span lang="en">Where this week actually went.</span></h3>
-            <p><span lang="zh-Hant">主視窗的活動分析頁，讀本機 Claude Code 與 Codex CLI 的記錄，說明近 7 天的活動落在哪些專案、模型與工具上。</span><span lang="en">The activity tab reads your local Claude Code and Codex CLI records and shows which projects, models and tools the last seven days went to.</span></p>
+            <h3><span lang="zh-Hant">近 7 天，用量主要花在哪裡。</span><span lang="en">Where this week actually went.</span></h3>
+            <p><span lang="zh-Hant">活動分析只讀取這台 Mac 上的 Claude Code 與 Codex CLI 紀錄，整理出最近 7 天最常使用的專案、模型和工具。</span><span lang="en">The activity tab reads your local Claude Code and Codex CLI records and shows which projects, models and tools the last seven days went to.</span></p>
             <ul class="bullets">
-              <li><span lang="zh-Hant">Claude 與 Codex 各一張卡，分母完全分開，不把兩套額度系統混成一個百分比。</span><span lang="en">Claude and Codex get their own card and their own denominator — two quota systems never share one percentage.</span></li>
-              <li><span lang="zh-Hant">只列前三名，其餘彙總成「其他 N 個」，比例仍然加得回 100%。</span><span lang="en">Only the top three are listed; the rest roll into “N others”, so the shares still add up.</span></li>
-              <li><span lang="zh-Hant">Codex 的本機記錄沒有主線／子任務與工具內容，就顯示沒有資料，不補 0%。</span><span lang="en">Codex records carry no lane or tool data, so those read as no data instead of a fabricated 0%.</span></li>
-              <li><span lang="zh-Hant">頁首固定說明：這裡的比例不能拿來算額度，剩餘量以官方數字為準。</span><span lang="en">A fixed notice says it plainly: these shares are not quota. Remaining quota is the official number.</span></li>
+              <li><span lang="zh-Hant">Claude 和 Codex 分開統計，不會把兩套額度混成同一個百分比。</span><span lang="en">Claude and Codex get their own card and their own denominator — two quota systems never share one percentage.</span></li>
+              <li><span lang="zh-Hant">每一類只列前 3 名，其餘合併為「其他 N 個」，總和仍是 100%。</span><span lang="en">Only the top three are listed; the rest roll into “N others”, so the shares still add up.</span></li>
+              <li><span lang="zh-Hant">本機紀錄沒有的資訊會明確顯示「無資料」，不猜測，也不補成 0%。</span><span lang="en">Codex records carry no lane or tool data, so those read as no data instead of a fabricated 0%.</span></li>
+              <li><span lang="zh-Hant">這些比例只用來看活動分布；實際剩餘額度仍以服務回傳的數字為準。</span><span lang="en">A fixed notice says it plainly: these shares are not quota. Remaining quota is the official number.</span></li>
             </ul>
           </div>
           <div class="feature-art">
@@ -524,22 +526,22 @@
         <article class="feature feature--flip">
           <div class="feature-copy">
             <p class="feature-index"><span lang="zh-Hant">04 / Agent Skill</span><span lang="en">04 / AGENT SKILL</span></p>
-            <h3><span lang="zh-Hant">直接在 Claude Code 裡問。</span><span lang="en">Just ask inside Claude Code.</span></h3>
-            <p><span lang="zh-Hant">隨附的 Agent Skill，從主視窗的設定頁一鍵裝進 Claude Code 與 Codex。</span><span lang="en">The bundled Agent Skill installs into Claude Code and Codex in one click, from the Settings tab.</span></p>
+            <h3><span lang="zh-Hant">在 Claude Code 或 Codex 裡直接問。</span><span lang="en">Just ask inside Claude Code.</span></h3>
+            <p><span lang="zh-Hant">到 App 設定按一下，就能把隨附的 Agent Skill 安裝到 Claude Code 和 Codex。</span><span lang="en">The bundled Agent Skill installs into Claude Code and Codex in one click, from the Settings tab.</span></p>
             <ul class="bullets">
-              <li><span lang="zh-Hant">輸入 <code>/agent-usage-widget</code>，直接回報剩餘百分比與回復 100% 的時間。</span><span lang="en">Type <code>/agent-usage-widget</code> for the remaining percentages and when they return to 100%.</span></li>
-              <li><span lang="zh-Hant">額度偏低時，請 agent 在目前專案留下可接續的 checkpoint。</span><span lang="en">When quota runs low, ask the agent to leave a resumable checkpoint in the current project.</span></li>
-              <li><span lang="zh-Hant">預設讀本機快取，不會為了一次查詢就跳出 Keychain 提示。</span><span lang="en">It reads the local cache by default, so a single query never triggers a Keychain prompt.</span></li>
+              <li><span lang="zh-Hant">輸入 <code>/agent-usage-widget</code>，立即查看剩餘百分比和回復 100% 的時間。</span><span lang="en">Type <code>/agent-usage-widget</code> for the remaining percentages and when they return to 100%.</span></li>
+              <li><span lang="zh-Hant">快沒額度時，可以請 AI 助手先記下目前進度，額度恢復後再接著做。</span><span lang="en">When quota runs low, ask the agent to leave a resumable checkpoint in the current project.</span></li>
+              <li><span lang="zh-Hant">一般查詢只讀小工具快取，不會突然要求 Keychain 權限。</span><span lang="en">It reads the local cache by default, so a single query never triggers a Keychain prompt.</span></li>
             </ul>
           </div>
           <div class="feature-art feature-art--plain">
             <div class="term">
               <pre lang="zh-Hant"><b>&gt; /agent-usage-widget</b>
 
-Claude　剩餘 62%　5 小時視窗 · 03:41 後重置
-Codex 　剩餘 88%　每週視窗 · 4 天後重置
+Claude　還能用 62%　5 小時額度 · 3 小時 41 分後重置
+Codex 　還能用 88%　每週額度 · 4 天後重置
 
-資料來源：本機 widget 快取 · 2 分鐘前</pre>
+資料來源：本機小工具快取 · 更新於 2 分鐘前</pre>
               <pre lang="en"><b>&gt; /agent-usage-widget</b>
 
 Claude   62% left   5-hour window · resets in 03:41
@@ -547,7 +549,7 @@ Codex    88% left   weekly window · resets in 4 days
 
 Source: local widget cache · 2 minutes ago</pre>
             </div>
-            <p class="term-caption"><span lang="zh-Hant">示意輸出；實際數字來自你自己的 Mac。</span><span lang="en">Illustrative output; the real numbers come from your own Mac.</span></p>
+            <p class="term-caption"><span lang="zh-Hant">以上為範例；實際顯示的是這台 Mac 的資料。</span><span lang="en">Illustrative output; the real numbers come from your own Mac.</span></p>
           </div>
         </article>
       </div>
@@ -558,14 +560,14 @@ Source: local widget cache · 2 minutes ago</pre>
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow"><span lang="zh-Hant">隱私</span><span lang="en">Privacy</span></p>
-        <h2><span lang="zh-Hant">沒有產品帳號，沒有遙測，沒有遠端後台。</span><span lang="en">No product account, no telemetry, no remote backend.</span></h2>
-        <p class="section-lede reading"><span lang="zh-Hant">即時額度仍會連到 Claude 與 OpenAI 自己的端點，所以這不是完全離線。真正的邊界是：登入材料不離開原生橋接層。</span><span lang="en">Live quota still connects to Claude’s and OpenAI’s own endpoints, so this is not fully offline. The real boundary is that login material never leaves the native bridge.</span></p>
+        <h2><span lang="zh-Hant">登入資料只用來向原服務查詢額度。</span><span lang="en">No product account, no telemetry, no remote backend.</span></h2>
+        <p class="section-lede reading"><span lang="zh-Hant">取得即時額度時，小工具會使用這台 Mac 現有的登入狀態，連到 Claude 與 OpenAI 自己的用量端點。登入資料不會寫入小工具快取，也不會傳給作者或其他第三方。</span><span lang="en">Live quota still connects to Claude’s and OpenAI’s own endpoints, so this is not fully offline. The real boundary is that login material never leaves the native bridge.</span></p>
       </div>
       <div class="privacy-grid">
-        <article class="privacy-card"><h3><span lang="zh-Hant">會讀取與保存</span><span lang="en">Read and retained</span></h3><ul class="privacy-list"><li><span lang="zh-Hant">記憶體中的既有登入材料，只用於各服務自己的用量端點</span><span lang="en">Existing login material in memory, only for each service’s own usage endpoint</span></li><li><span lang="zh-Hant">各服務回傳的額度百分比、重置時間與模型標籤</span><span lang="en">Quota percentages, reset timing, and model labels returned by each service</span></li><li><span lang="zh-Hant">快取的非敏感百分比、狀態與時間戳</span><span lang="en">Cached non-sensitive percentages, status, and timestamps</span></li></ul></article>
-        <article class="privacy-card privacy-card--never"><h3><span lang="zh-Hant">不保存，也不傳到其他地方</span><span lang="en">Never stored or sent elsewhere</span></h3><ul class="privacy-list"><li><span lang="zh-Hant">登入材料不寫入 Widget 快取，也不交給 Node</span><span lang="en">Login material is never written to the widget cache or passed to Node</span></li><li><span lang="zh-Hant">本機 session 內容、專案名稱或私人畫面不離開 Mac</span><span lang="en">Local session content, project names, and private screenshots never leave the Mac</span></li><li><span lang="zh-Hant">沒有遙測、第三方分析 SDK 或產品遠端後台</span><span lang="en">No telemetry, third-party analytics SDK, or product backend</span></li></ul></article>
+        <article class="privacy-card"><h3><span lang="zh-Hant">會使用的資料</span><span lang="en">Read and retained</span></h3><ul class="privacy-list"><li><span lang="zh-Hant">現有的 Claude、Codex 登入狀態，只用於向原服務查詢額度</span><span lang="en">Existing login material in memory, only for each service’s own usage endpoint</span></li><li><span lang="zh-Hant">服務回傳的剩餘百分比、重置時間和模型名稱</span><span lang="en">Quota percentages, reset timing, and model labels returned by each service</span></li><li><span lang="zh-Hant">保存在本機的非敏感額度數字、資料狀態和更新時間</span><span lang="en">Cached non-sensitive percentages, status, and timestamps</span></li></ul></article>
+        <article class="privacy-card privacy-card--never"><h3><span lang="zh-Hant">不會保存或傳給第三方</span><span lang="en">Never stored or sent elsewhere</span></h3><ul class="privacy-list"><li><span lang="zh-Hant">登入資料不會寫入小工具快取，也不會交給 Node 處理</span><span lang="en">Login material is never written to the widget cache or passed to Node</span></li><li><span lang="zh-Hant">不會上傳 session 內容、專案名稱或私人畫面</span><span lang="en">Local session content, project names, and private screenshots never leave the Mac</span></li><li><span lang="zh-Hant">不包含遙測、第三方分析 SDK 或產品後台</span><span lang="en">No telemetry, third-party analytics SDK, or product backend</span></li></ul></article>
       </div>
-      <p class="privacy-note"><span lang="zh-Hant">Claude Keychain 存取可以單獨停用，Codex、桌面卡與開機啟動仍照常運作。</span><span lang="en">Claude Keychain access can be disabled on its own; Codex, the desktop cards, and launch at login keep working.</span></p>
+      <p class="privacy-note"><span lang="zh-Hant">不想授權 Claude Keychain？可以只關閉 Claude 即時額度；Codex 額度、桌面小工具和開機啟動仍可使用。</span><span lang="en">Claude Keychain access can be disabled on its own; Codex, the desktop cards, and launch at login keep working.</span></p>
     </div>
   </section>
 
@@ -573,16 +575,16 @@ Source: local widget cache · 2 minutes ago</pre>
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow"><span lang="zh-Hant">下載</span><span lang="en">Download</span></p>
-        <h2><span lang="zh-Hant">拖進 Applications，或一次裝好。</span><span lang="en">Drag it in, or set it all up at once.</span></h2>
-        <p class="section-lede reading"><span lang="zh-Hant">兩個安裝檔都是 0.2.5 arm64，內含經審查的 Node runtime。你的 Mac 不需要先裝 Node 或 Xcode。</span><span lang="en">Both 0.2.5 arm64 installers carry the reviewed Node runtime. Your Mac needs neither Node nor Xcode first.</span></p>
+        <h2><span lang="zh-Hant">選一種安裝方式，幾分鐘就能開始。</span><span lang="en">Drag it in, or set it all up at once.</span></h2>
+        <p class="section-lede reading"><span lang="zh-Hant">兩種安裝檔都適用 Apple Silicon，並已內建執行所需元件；不用先安裝 Node 或 Xcode。</span><span lang="en">Both 0.2.5 arm64 installers carry the reviewed Node runtime. Your Mac needs neither Node nor Xcode first.</span></p>
       </div>
       <div class="install-grid">
-        <article class="installer installer--primary"><div class="stack stack--tight"><span class="installer-meta">DMG · 0.2.5 · ARM64</span><h3><span lang="zh-Hant">拖到 Applications</span><span lang="en">Drag to Applications</span></h3><p><span lang="zh-Hant">自己決定何時啟用開機啟動、何時安裝 Agent Skill。</span><span lang="en">You decide when to enable launch at login and when to install the Agent Skill.</span></p></div><a class="button button--primary" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.5-arm64.dmg"><span lang="zh-Hant">下載 .dmg</span><span lang="en">Download .dmg</span></a></article>
-        <article class="installer"><div class="stack stack--tight"><span class="installer-meta">PKG · 0.2.5 · ARM64</span><h3><span lang="zh-Hant">一併完成設定</span><span lang="en">Set everything up</span></h3><p><span lang="zh-Hant">安裝 App、設定開機啟動、加入 Agent Skill，之後仍可完整移除。</span><span lang="en">Installs the app, sets up launch at login, and adds the Agent Skill. Still fully removable afterwards.</span></p></div><a class="button" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.5-arm64.pkg"><span lang="zh-Hant">下載 .pkg</span><span lang="en">Download .pkg</span></a></article>
+        <article class="installer installer--primary"><div class="stack stack--tight"><span class="installer-meta">DMG · 0.2.5 · ARM64</span><h3><span lang="zh-Hant">手動安裝（建議）</span><span lang="en">Drag to Applications</span></h3><p><span lang="zh-Hant">把 App 拖到「應用程式」，首次開啟後再依需要啟用開機啟動和 Agent Skill。</span><span lang="en">You decide when to enable launch at login and when to install the Agent Skill.</span></p></div><a class="button button--primary" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.5-arm64.dmg"><span lang="zh-Hant">下載 DMG</span><span lang="en">Download .dmg</span></a></article>
+        <article class="installer"><div class="stack stack--tight"><span class="installer-meta">PKG · 0.2.5 · ARM64</span><h3><span lang="zh-Hant">自動完成設定</span><span lang="en">Set everything up</span></h3><p><span lang="zh-Hant">一次安裝 App、設為登入時啟動，並加入 Agent Skill。之後仍可完整移除。</span><span lang="en">Installs the app, sets up launch at login, and adds the Agent Skill. Still fully removable afterwards.</span></p></div><a class="button" href="https://github.com/estellacoding/agent-usage-widget-releases/releases/latest/download/AgentUsageWidget-0.2.5-arm64.pkg"><span lang="zh-Hant">下載 PKG 安裝包</span><span lang="en">Download .pkg</span></a></article>
       </div>
       <aside class="gatekeeper">
-        <h3><span lang="zh-Hant">第一次開啟就能通過 Gatekeeper</span><span lang="en">It passes Gatekeeper on first launch</span></h3>
-        <p><span lang="zh-Hant">DMG 與 PKG 都使用 Developer ID 簽章，並已由 Apple 公證與附加票據，不需要繞過 macOS 安全性設定。若系統仍顯示無法驗證或檔案損壞，請不要繞過警告，重新下載並核對 release checksum。</span><span lang="en">Both the DMG and the PKG are Developer ID signed, Apple notarized, and stapled, so no macOS security bypass is needed. If macOS still reports an unverifiable or damaged file, do not bypass the warning — re-download it and verify the release checksum.</span></p>
+        <h3><span lang="zh-Hant">已通過 macOS 安全驗證</span><span lang="en">It passes Gatekeeper on first launch</span></h3>
+        <p><span lang="zh-Hant">兩種安裝檔都有 Developer ID 簽章，並已完成 Apple 公證，不需要關閉任何安全設定。若 Mac 仍顯示「無法驗證」或「檔案已損毀」，請重新下載並核對發佈頁的校驗碼，不要略過警告。</span><span lang="en">Both the DMG and the PKG are Developer ID signed, Apple notarized, and stapled, so no macOS security bypass is needed. If macOS still reports an unverifiable or damaged file, do not bypass the warning — re-download it and verify the release checksum.</span></p>
       </aside>
     </div>
   </section>
@@ -590,14 +592,14 @@ Source: local widget cache · 2 minutes ago</pre>
   <section class="section section--soft" id="faq">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow"><span lang="zh-Hant">重要邊界</span><span lang="en">Boundaries</span></p>
-        <h2><span lang="zh-Hant">安裝前先說清楚。</span><span lang="en">Clear before you install.</span></h2>
+        <p class="eyebrow"><span lang="zh-Hant">常見問題</span><span lang="en">Boundaries</span></p>
+        <h2><span lang="zh-Hant">下載前，你可能想先知道。</span><span lang="en">Clear before you install.</span></h2>
       </div>
       <div class="faq">
-        <details><summary><span lang="zh-Hant">這是 Anthropic 或 OpenAI 的官方工具嗎？</span><span lang="en">Is this an official Anthropic or OpenAI tool?</span></summary><p><span lang="zh-Hant">不是。這是非官方的 best-effort 整合；端點、登入或服務調整都可能讓讀取失敗或與服務頁面不同，請以服務自己的頁面為準。</span><span lang="en">No. It is an unofficial, best-effort integration. Endpoint, login, or service changes can cause failures or differences; the provider’s own pages are authoritative.</span></p></details>
-        <details><summary><span lang="zh-Hant">「即時」代表官方保證準確嗎？</span><span lang="en">Does “live” mean officially guaranteed accuracy?</span></summary><p><span lang="zh-Hant">不代表。即時只表示最近一次對該服務端點的請求成功；快取與過期會顯示資料年齡，無資料會說明缺少登入、權限或服務錯誤。</span><span lang="en">No. Live only means the latest request to that service endpoint succeeded. Cached and stale show the data’s age, and unavailable explains a missing sign-in, a denied permission, or a service failure.</span></p></details>
-        <details><summary><span lang="zh-Hant">為什麼會跳出 Claude Safe Storage 提示？</span><span lang="en">Why does the Claude Safe Storage prompt appear?</span></summary><p><span lang="zh-Hant">Claude 的即時額度需要沿用 Claude Desktop 的既有 session。「允許」只授權一次，「永遠允許」可避免每分鐘刷新重複詢問；也可以單獨停用 Claude Keychain 存取。</span><span lang="en">Claude’s live quota reuses the existing Claude Desktop session. Allow grants one access; Always Allow avoids a repeat prompt on every minute’s refresh. You can also disable Claude Keychain access on its own.</span></p></details>
-        <details><summary><span lang="zh-Hant">怎麼完整移除？</span><span lang="en">How do I remove everything?</span></summary><p><span lang="zh-Hant">先在主視窗設定頁關閉開機啟動，再從桌面卡右鍵結束；接著移除 Applications 裡的 App、本機 Skill 與非敏感快取。PKG 安裝還可一併忘記 receipt。</span><span lang="en">Turn off launch at login in Settings, quit from the card’s context menu, then remove the app, local Skill, and non-sensitive cache. A PKG install can also have its receipt forgotten.</span></p></details>
+        <details><summary><span lang="zh-Hant">這是 Anthropic 或 OpenAI 的官方工具嗎？</span><span lang="en">Is this an official Anthropic or OpenAI tool?</span></summary><p><span lang="zh-Hant">不是。這是獨立開發的非官方工具。Claude 或 OpenAI 若調整登入方式或用量端點，小工具可能暫時讀不到資料，或與官方頁面顯示不同；請以官方頁面為準。</span><span lang="en">No. It is an unofficial, best-effort integration. Endpoint, login, or service changes can cause failures or differences; the provider’s own pages are authoritative.</span></p></details>
+        <details><summary><span lang="zh-Hant">「即時」資料是什麼意思？</span><span lang="en">Does “live” mean officially guaranteed accuracy?</span></summary><p><span lang="zh-Hant">代表最近一次向服務查詢額度時成功取得資料，不代表官方保證數字完全準確。若畫面顯示「快取」或「已過期」，也會附上資料時間；無法取得時則會說明是登入、權限或服務連線問題。</span><span lang="en">No. Live only means the latest request to that service endpoint succeeded. Cached and stale show the data’s age, and unavailable explains a missing sign-in, a denied permission, or a service failure.</span></p></details>
+        <details><summary><span lang="zh-Hant">為什麼 macOS 會詢問「Claude Safe Storage」權限？</span><span lang="en">Why does the Claude Safe Storage prompt appear?</span></summary><p><span lang="zh-Hant">為了取得 Claude 即時額度，小工具會沿用你在 Claude Desktop 的登入狀態，因此 macOS 會詢問是否允許存取。「允許」只同意這一次；「永遠允許」可避免每分鐘更新時重複詢問。你也可以在設定中完全關閉這項權限。</span><span lang="en">Claude’s live quota reuses the existing Claude Desktop session. Allow grants one access; Always Allow avoids a repeat prompt on every minute’s refresh. You can also disable Claude Keychain access on its own.</span></p></details>
+        <details><summary><span lang="zh-Hant">如何完整移除？</span><span lang="en">How do I remove everything?</span></summary><p><span lang="zh-Hant">先到設定關閉「登入時啟動」，再從桌面卡片按右鍵並選擇結束。接著刪除「應用程式」中的 App、本機 Agent Skill 和非敏感快取；若使用 PKG 安裝，也可以一併移除安裝收據。</span><span lang="en">Turn off launch at login in Settings, quit from the card’s context menu, then remove the app, local Skill, and non-sensitive cache. A PKG install can also have its receipt forgotten.</span></p></details>
       </div>
     </div>
   </section>
@@ -605,7 +607,7 @@ Source: local widget cache · 2 minutes ago</pre>
 
 <footer>
   <div class="wrap footer-grid">
-    <div class="stack stack--tight"><strong>Agent Usage Widget 0.2.5</strong><p class="footer-copy"><span lang="zh-Hant">macOS 13 以上 · Apple Silicon · Developer ID 簽章、Apple 已公證。非 Anthropic、OpenAI 或 GitHub 官方工具，也與三者無關。額度數字僅供參考。</span><span lang="en">macOS 13+ · Apple Silicon · Developer ID signed and Apple notarized. Not an official Anthropic, OpenAI or GitHub tool and not affiliated with them. Quota values are informational.</span></p></div>
+    <div class="stack stack--tight"><strong>Agent Usage Widget 0.2.5</strong><p class="footer-copy"><span lang="zh-Hant">支援 macOS 13 以上與 Apple Silicon，使用 Developer ID 簽章並通過 Apple 公證。本工具由獨立開發者製作，與 Anthropic、OpenAI 或 GitHub 無關；額度數字僅供參考。</span><span lang="en">macOS 13+ · Apple Silicon · Developer ID signed and Apple notarized. Not an official Anthropic, OpenAI or GitHub tool and not affiliated with them. Quota values are informational.</span></p></div>
     <div class="footer-links"><a href="#features"><span lang="zh-Hant">功能</span><span lang="en">Features</span></a><a href="#privacy"><span lang="zh-Hant">隱私</span><span lang="en">Privacy</span></a><a href="#install"><span lang="zh-Hant">下載</span><span lang="en">Download</span></a><a href="https://github.com/estellacoding/agent-usage-widget-releases/releases"><span lang="zh-Hant">版本紀錄</span><span lang="en">Releases</span></a></div>
   </div>
 </footer>
